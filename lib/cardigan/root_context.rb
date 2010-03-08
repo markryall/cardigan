@@ -1,25 +1,16 @@
-require 'readline'
+require 'cardigan/context'
 
 module Cardigan
   class RootContext
+    include Context
+
     def initialize *args
       @prompt_text = 'cardigan > '
+      @commands = ['add']
     end
-
-    def push
-      begin
-        while line = Readline.readline(@prompt_text, true)
-          line.strip!
-          case line
-            when 'quit'
-              return
-          end
-          puts
-        end
-      rescue Interrupt => e
-        exit
-      end
-      puts
+private
+    def add_command
+      "here's where i'd be adding"
     end
   end
 end
