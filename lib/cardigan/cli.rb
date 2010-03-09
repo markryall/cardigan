@@ -4,22 +4,23 @@ require 'cardigan/directory'
 
 module Cardigan
   class Cli
+    CONFIG_FILE = '.cardigan'
+
     def initialize io=Io.new
       @io = io
       @home = Directory.new('~')
     end
 
     def execute *args
-      unless @home.has_file?('.cardigan')
-        name = @io.ask('Enter your full name')
-        email = @io.ask('Enter your email address')
-        #File
+      if @home.has_file?(CONFIG_FILE)
+        config = @home.load(CONFIG_FILE)
+      else
+        config = { :name => @io.ask('Enter your full name'),
+          :email => @io.ask('Enter your email address')
+        }
+        @home.store CONFIG_FILE, config 
       end
-      #consume_args *args
-      #RootContext.new.push
-    end
-private
-    def consume_args *args
+      RootContext.new(@io, Directory.new('.cards')).push
     end
   end
 end

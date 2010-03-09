@@ -19,8 +19,8 @@ module Cardigan
             when 'quit','exit'
               return
             when /(\w+) (.*)/
-              puts $1
-              puts $2
+              m = "#{$1}_command".to_sym
+              send(m, $2) if respond_to?(m)
           end
           puts
         end

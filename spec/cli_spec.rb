@@ -13,6 +13,7 @@ describe Cardigan::Cli do
   describe "when .cardigan file doesn't exist" do
     before do
       so_when(:home_directory, :as => :config_check).receives(:has_file?).with('.cardigan').return(false)
+      so_when(:home_directory, :as => :store_config).receives(:store).with({:name => 'John Smith',:email => 'john@mail.com'}).return({})
       @cli.execute
     end
 
@@ -27,11 +28,16 @@ describe Cardigan::Cli do
     it 'should prompt for email' do
       expectation(:email_prompt).should be_matched
     end
+    
+    it 'should write config hash' do
+      expectation(:store_config).should be_matched
+    end
   end
   
   describe "when .cardigan file does exist" do
     before do
       so_when(:home_directory, :as => :config_check).receives(:has_file?).with('.cardigan').return(true)
+      so_when(:home_directory, :as => :load_config).receives(:load).with('.cardigan').return({})
       @cli.execute
     end
 
@@ -45,6 +51,10 @@ describe Cardigan::Cli do
 
     it 'should not prompt for email' do
       expectation(:email_prompt).should_not be_matched
+    end
+    
+    it 'should read config hash' do
+      expectation(:load_config).should be_matched
     end
   end
 end
