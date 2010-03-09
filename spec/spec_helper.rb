@@ -1,3 +1,5 @@
-$:.unshift File.dirname(__FILE_)+'/../lib'
+$:.unshift File.dirname(__FILE__)+'/../lib'
 
 require 'cardigan/cli'
+require 'orangutan/mock_adapter'
+

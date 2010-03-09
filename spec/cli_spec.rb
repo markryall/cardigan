@@ -1,0 +1,50 @@
+require File.dirname(__FILE__)+'/spec_helper'
+
+describe Cardigan::Cli do
+  before do
+    register_object :directory_class, Cardigan::Directory
+    stub_method :directory_class, :new
+    so_when(:directory_class).receives(:new).with('~').return(stub(:home_directory))
+    so_when(:io, :as => :name_prompt).receives(:ask).with('Enter your full name').return('John Smith')
+    so_when(:io, :as => :email_prompt).receives(:ask).with('Enter your email address').return('john@mail.com')
+    @cli = Cardigan::Cli.new(stub(:io))
+  end
+
+  describe "when .cardigan file doesn't exist" do
+    before do
+      so_when(:home_directory, :as => :config_check).receives(:has_file?).with('.cardigan').return(false)
+      @cli.execute
+    end
+
+    it 'should check for existance of config file' do
+      expectation(:config_check).should be_matched
+    end
+
+    it 'should prompt for full name' do
+      expectation(:name_prompt).should be_matched
+    end
+
+    it 'should prompt for email' do
+      expectation(:email_prompt).should be_matched
+    end
+  end
+  
+  describe "when .cardigan file does exist" do
+    before do
+      so_when(:home_directory, :as => :config_check).receives(:has_file?).with('.cardigan').return(true)
+      @cli.execute
+    end
+
+    it 'should check for existance of config file' do
+      expectation(:config_check).should be_matched
+    end
+
+    it 'should not prompt for full name' do
+      expectation(:name_prompt).should_not be_matched
+    end
+
+    it 'should not prompt for email' do
+      expectation(:email_prompt).should_not be_matched
+    end
+  end
+end
