@@ -22,5 +22,9 @@ module Cardigan
     def create
       FileUtils.mkdir_p @path
     end
+    
+    def find pattern
+      Dir.glob(File.join(@path, pattern)).map {|path| YAML::load File.read(path) }
+    end
   end
 end

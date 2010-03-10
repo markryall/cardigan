@@ -8,5 +8,9 @@ module Cardigan
       @out_io.print "#{prompt} > "
       @in_io.gets.chomp
     end
+    
+    def say message
+      @out_io.puts message
+    end
   end
 end

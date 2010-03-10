@@ -9,7 +9,7 @@ module Cardigan
       end
       Readline.completer_word_break_characters = ''
     end
-    
+
     def push
       refresh
       begin
@@ -19,15 +19,28 @@ module Cardigan
             when 'quit','exit'
               return
             when /(\w+) (.*)/
-              m = "#{$1}_command".to_sym
-              send(m, $2) if respond_to?(m)
+              process_command $1, $2
+            when /(\w+)/
+              process_command $1
+            else
+              puts 'unknown command'
           end
           puts
+          refresh
         end
       rescue Interrupt => e
         return
       end
       puts
+    end
+    
+    def process_command name, parameter=nil
+      m = "#{name}_command".to_sym
+      if respond_to?(m)
+        send(m, parameter) 
+      else
+        @io.say 'unknown command'
+      end
     end
   end
 end

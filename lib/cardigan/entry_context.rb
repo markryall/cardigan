@@ -10,8 +10,8 @@ module Cardigan
       @commands = ['set']
     end
     
-    def set_command text
-      @entry[:text] = @io.ask('Enter the new value')
+    def set_command key
+      @entry[:text] = @io.ask("Enter the new value for #{key}")
     end
   end
 end
