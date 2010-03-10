@@ -6,12 +6,12 @@ module Cardigan
     
     def initialize io, entry
       @io, @entry = io, entry
-      @prompt_text = "c/#{entry[:name]} > "
+      @prompt_text = "c/#{entry['name']} > "
       @commands = ['set']
     end
-    
+
     def set_command key
-      @entry[:text] = @io.ask("Enter the new value for #{key}")
+      @entry[key] = @io.ask("Enter the new value for #{key}")
     end
   end
 end
