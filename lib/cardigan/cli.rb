@@ -20,7 +20,8 @@ module Cardigan
         }
         @home.store CONFIG_FILE, config 
       end
-      RootContext.new(@io, Directory.new('.cards')).push
+      name = "\"#{config[:name]}\" <#{config[:email]}>"
+      RootContext.new(@io, Directory.new('.cards'), name).push
     end
   end
 end
