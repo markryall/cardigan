@@ -27,7 +27,7 @@ module Cardigan
     end
 
     def edit_command text
-      card = @cards.find {|card| card['name'] == text}
+      card = find_card(name)
       card ||= { 'id' => UUIDTools::UUID.random_create.to_s,
         'name' => text
       }
@@ -42,25 +42,27 @@ module Cardigan
     end
     
     def claim_command text
-      card = @cards.find {|card| card['name'] == text}
-      if card
-        card['owner'] = @name
-        save card
-      else
-        @io.say "unknown card #{text}"
-      end
+      set_key name, 'owner', @name
     end
     
     def unclaim_command text
-      card = @cards.find {|card| card['name'] == text}
+      set_key name, 'owner', nil
+    end
+private
+    def find_card name
+      @cards.find {|card| card['name'] == name}
+    end
+
+    def set_key name, key, value
+      card = find_card(name)
       if card
-        card['owner'] = nil
+        card[key] = value
         save card
       else
         @io.say "unknown card #{text}"
       end
     end
-private
+
     def save card
       @directory.store "#{card['id']}.card", card
     end
