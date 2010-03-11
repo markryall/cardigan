@@ -19,6 +19,10 @@ module Cardigan
       File.open(File.join(@path, file), 'w') {|f| f.print hash.to_yaml}
     end
     
+    def delete file
+      FileUtils.rm File.join(@path, file)
+    end
+    
     def create
       FileUtils.mkdir_p @path
     end

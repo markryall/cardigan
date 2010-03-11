@@ -17,6 +17,7 @@ module Cardigan
       @commands = ['create', 'list', 'filter', 'unfilter']
       @repository.cards.each do |card|
         @commands << "open #{card['name']}"
+        @commands << "destroy #{card['name']}"
         if card['owner'] == @name
           @commands << "unclaim #{card['name']}"
         else
@@ -35,13 +36,22 @@ module Cardigan
       @repository.save card
     end
 
+    def destroy_command text
+      cards = sorted_selection
+      text.scan(/\d+/).each do |n|
+        card = cards[n.to_i - 1]
+        @io.say "destroying \"#{card['name']}\""
+        @repository.destroy card
+      end
+    end
+
     def list_command ignored
-      cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
+      cards = sorted_selection
       longest = cards.map {|card| card['name'].length }.max
       @io.say '-' * (longest + 12)
       @io.say "| Count | #{"Name".ljust(longest)} |"
       @io.say '-' * (longest + 12)
-      cards.map {|card| card['name'] }.sort.each_with_index {|name, index| @io.say "| #{(index+1).to_s.ljust(5)} | #{name.ljust(longest)} |" }
+      cards.map {|card| card['name'] }.each_with_index {|name, index| @io.say "| #{(index+1).to_s.ljust(5)} | #{name.ljust(longest)} |" }
       @io.say '-' * (longest + 12)
     end
     
@@ -68,6 +78,11 @@ module Cardigan
       set_key name, 'owner', nil
     end
 private
+    def sorted_selection
+      cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
+      cards.sort {|a,b| a['name'] <=> b['name'] }
+    end
+
     def set_key name, key, value
       card = @repository.find_card(name)
       if card
