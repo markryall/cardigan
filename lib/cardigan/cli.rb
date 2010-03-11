@@ -1,6 +1,6 @@
 require 'cardigan/io'
 require 'cardigan/root_context'
-require 'cardigan/directory'
+require 'cardigan/repository'
 
 module Cardigan
   class Cli
@@ -21,7 +21,7 @@ module Cardigan
         @home.store CONFIG_FILE, config 
       end
       name = "\"#{config[:name]}\" <#{config[:email]}>"
-      RootContext.new(@io, Directory.new('.cards'), name).push
+      RootContext.new(@io, Repository.new('.cards'), name).push
     end
   end
 end
