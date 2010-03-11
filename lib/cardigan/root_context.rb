@@ -9,7 +9,7 @@ module Cardigan
 
     def initialize io, repository, name
       @io, @repository, @name = io, repository, name
-      @prompt_text = 'cardigan > '
+      @prompt_text = "#{File.expand_path('.').split('/').last} > "
     end
 
     def refresh_commands

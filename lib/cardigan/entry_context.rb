@@ -6,7 +6,7 @@ module Cardigan
     
     def initialize io, entry
       @io, @entry = io, entry
-      @prompt_text = "c/#{entry['name']} > "
+      @prompt_text = "#{File.expand_path('.').split('/').last.slice(0..1)}/#{entry['name']} > "
       @commands = ['set']
     end
 
