@@ -14,9 +14,9 @@ module Cardigan
 
     def refresh_commands
       @repository.refresh
-      @commands = ['edit', 'list']
+      @commands = ['create', 'list']
       @repository.cards.each do |card|
-        @commands << "edit #{card['name']}"
+        @commands << "open #{card['name']}"
         if card['owner'] == @name
           @commands << "unclaim #{card['name']}"
         else
@@ -25,11 +25,12 @@ module Cardigan
       end
     end
 
-    def edit_command text
-      card = @repository.find_card(name)
-      card ||= { 'id' => UUIDTools::UUID.random_create.to_s,
-        'name' => text
-      }
+    def create_command name
+      @repository.save @repository.find_or_create(name)
+    end
+
+    def open_command text
+      card = @repository.find_or_create(name)
       EntryContext.new(@io, card).push
       @repository.save card
     end

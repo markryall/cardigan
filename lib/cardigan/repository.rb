@@ -20,5 +20,12 @@ module Cardigan
     def save card
       @directory.store "#{card['id']}.card", card
     end
+    
+    def find_or_create name
+      card = find_card(name)
+      card or { 'id' => UUIDTools::UUID.random_create.to_s,
+        'name' => name
+      }
+    end
   end
 end
