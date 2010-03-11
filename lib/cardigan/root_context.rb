@@ -14,7 +14,7 @@ module Cardigan
 
     def refresh_commands
       @repository.refresh
-      @commands = ['create', 'list']
+      @commands = ['create', 'list', 'filter', 'unfilter']
       @repository.cards.each do |card|
         @commands << "open #{card['name']}"
         if card['owner'] == @name
@@ -35,10 +35,29 @@ module Cardigan
       @repository.save card
     end
 
-    def list_command text=nil
-      cards = text ? @repository.cards.select {|card| eval text } : @repository.cards
-      @io.say "\n#{cards.count} cards"
-      cards.map {|card| card['name'] }.sort.each {|name| @io.say name }
+    def list_command ignored
+      cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
+      longest = cards.map {|card| card['name'].length }.max
+      @io.say '-' * (longest + 12)
+      @io.say "| Count | #{"Name".ljust(longest)} |"
+      @io.say '-' * (longest + 12)
+      cards.map {|card| card['name'] }.sort.each_with_index {|name, index| @io.say "| #{(index+1).to_s.ljust(5)} | #{name.ljust(longest)} |" }
+      @io.say '-' * (longest + 12)
+    end
+    
+    def unfilter_command ignored
+      @filter = nil
+    end
+    
+    def filter_command code
+      @filter = code
+      begin
+        cards = @repository.cards.select {|card| eval @filter }
+        @io.say "#{cards.count} cards match filter"
+      rescue Exception => e
+        @io.say "Invalid expression:\n#{e.message}"
+        @filter = nil
+      end
     end
     
     def claim_command name
