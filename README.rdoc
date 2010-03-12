@@ -29,14 +29,15 @@ You start in listing mode.
 The commands available are (with the awesome power of tab completion):
 
 * quit or exit or ctrl-d - exit
-* list - shows all cards
+* list - shows all cards with an index
 * filter <filter> - sets the filter for cards - this is ruby code such as card[:name].start_with?('a')
-* claim <numbers> - sets the owner of the specified cards (by index number from the list view)
-* unclaim <numbers> - removes the owner from the specified cards (by index number from the list view)
+* claim <numbers> - sets the owner of the specified cards (by index from the list)
+* unclaim <numbers> - removes the owner from the specified cards (by index from the list)
 * create <name> - creates a card with the specified name
 * open <name> - creates or opens the card and enters edit mode
 * columns - lists or changes the columns to be displayed by the list command
-* destroy <numbers> - deletes the specified cards (by index number from the list view)
+* destroy <numbers> - deletes the specified cards (by index from the list)
+* set <key> <numbers> - prompts for a field value and sets it on all specified cards (by index from the list)
 
 == Editing mode
 
@@ -46,4 +47,4 @@ The commands available are (with the awesome power of tab completion):
 
 == Future plans
 
-Refer to the .cards for detailed story breakdown but mostly simple worflow, importing, exporting and generating pretty html reports/charts.
+Refer to the .cards for detailed story breakdown but mostly simple workflow, importing, exporting and generating pretty html reports/charts.

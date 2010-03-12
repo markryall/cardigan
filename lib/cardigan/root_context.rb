@@ -88,8 +88,23 @@ module Cardigan
     
     def unclaim_command numbers
       each_card_from_indices(numbers) do |card|
-        @io.say "claiming \"#{card['name']}\""
+        @io.say "unclaiming \"#{card['name']}\""
         card.delete('owner')
+        @repository.save card
+      end
+    end
+
+    def set_command text
+      key, *rest = text.scan(/\w+/)
+      value = @io.ask("Enter the new value for #{key}")
+      each_card_from_indices(rest.join(' ')) do |card|
+        if value.empty?
+          @io.say "removing #{key} from '#{card['name']}'"
+          card.delete key
+        else
+          @io.say "setting #{key} to '#{value}' for '#{card['name']}'"
+          card[key] = value
+        end
         @repository.save card
       end
     end
