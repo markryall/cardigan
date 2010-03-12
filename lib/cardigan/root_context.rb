@@ -2,6 +2,7 @@ require 'rubygems'
 require 'uuidtools'
 require 'cardigan/context'
 require 'cardigan/entry_context'
+require 'cardigan/text_report_formatter'
 
 module Cardigan
   class RootContext
@@ -47,12 +48,10 @@ module Cardigan
 
     def list_command ignored
       cards = sorted_selection
-      longest = cards.map {|card| card['name'].length }.max
-      @io.say '-' * (longest + 12)
-      @io.say "| Count | #{"Name".ljust(longest)} |"
-      @io.say '-' * (longest + 12)
-      cards.map {|card| card['name'] }.each_with_index {|name, index| @io.say "| #{(index+1).to_s.ljust(5)} | #{name.ljust(longest)} |" }
-      @io.say '-' * (longest + 12)
+      formatter = TextReportFormatter.new @io
+      a = 0
+      formatter.add_column('name', max_field_length(cards, 'name'))
+      formatter.output cards
     end
     
     def unfilter_command ignored
@@ -78,6 +77,10 @@ module Cardigan
       set_key name, 'owner', nil
     end
 private
+    def max_field_length cards, name
+      cards.map {|v| v[name] ? v[name].length : 0 }.max
+    end
+
     def sorted_selection
       cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
       cards.sort {|a,b| a['name'] <=> b['name'] }
