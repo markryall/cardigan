@@ -25,15 +25,20 @@ The commands available are (with the awesome power of tab completion):
 * quit
 * exit
 * list - shows all cards
-* list <filter> - shows a subset of cards. Filter is some ruby code such as card[:name].start_with?('a')
-* edit <name> - creates a card and enters edit mode
+* filter <filter> - sets the filter for cards - this is ruby code such as card[:name].start_with?('a')
+* claim <name> - sets the owner of the card
+* unclaim <name> - removes the card owner
+* create <name> - creates a card with the specified name
+* open <name> - creates or opens the card and enters edit mode
+* columns - changes the list of columns to be displayed
+* destroy <numbers> - deletes the specified cards (by index number from the list view)
 
 == Editing mode
 
 * quit
 * exit
 * set <key> - creates a new key and prompts for the new value
-	
+
 == Future plans
 
 Refer to the .cards for detailed story breakdown but mostly importing, exporting and generating pretty html reports/charts.
