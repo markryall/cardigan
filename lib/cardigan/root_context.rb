@@ -16,15 +16,9 @@ module Cardigan
 
     def refresh_commands
       @repository.refresh
-      @commands = ['create', 'list', 'filter', 'unfilter', 'columns']
+      @commands = ['create', 'list', 'filter', 'unfilter', 'columns', 'claim', 'unclaim', 'destroy']
       @repository.cards.each do |card|
         @commands << "open #{card['name']}"
-        @commands << "destroy #{card['name']}"
-        if card['owner'] == @name
-          @commands << "unclaim #{card['name']}"
-        else
-          @commands << "claim #{card['name']}"
-        end
       end
     end
 
@@ -38,10 +32,8 @@ module Cardigan
       @repository.save card
     end
 
-    def destroy_command text
-      cards = sorted_selection
-      text.scan(/\d+/).each do |n|
-        card = cards[n.to_i - 1]
+    def destroy_command numbers
+      each_card_from_indices(numbers) do |card|
         @io.say "destroying \"#{card['name']}\""
         @repository.destroy card
       end
@@ -76,32 +68,36 @@ module Cardigan
       end
     end
     
-    def claim_command name
-      set_key name, 'owner', @name
+    def claim_command numbers
+      each_card_from_indices(numbers) do |card|
+        @io.say "claiming \"#{card['name']}\""
+        card['owner'] = @name
+        @repository.save card
+      end
     end
     
-    def unclaim_command name
-      set_key name, 'owner', nil
+    def unclaim_command numbers
+      each_card_from_indices(numbers) do |card|
+        @io.say "claiming \"#{card['name']}\""
+        card.delete('owner')
+        @repository.save card
+      end
     end
 private
+    def each_card_from_indices numbers
+      cards = sorted_selection
+      numbers.scan(/\d+/).each do |n|
+        yield cards[n.to_i - 1]
+      end
+    end
+
     def max_field_length cards, name
       cards.map {|v| v[name] ? v[name].length : 0 }.max
     end
-
+ 
     def sorted_selection
       cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
       cards.sort {|a,b| a['name'] <=> b['name'] }
     end
-
-    def set_key name, key, value
-      card = @repository.find_card(name)
-      if card
-        card[key] = value
-        @repository.save card
-      else
-        @io.say "unknown card #{text}"
-      end
-    end
   end
 end
-    

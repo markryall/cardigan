@@ -26,8 +26,8 @@ The commands available are (with the awesome power of tab completion):
 * exit
 * list - shows all cards
 * filter <filter> - sets the filter for cards - this is ruby code such as card[:name].start_with?('a')
-* claim <name> - sets the owner of the card
-* unclaim <name> - removes the card owner
+* claim <numbers> - sets the owner of the specified cards (by index number from the list view)
+* unclaim <numbers> - removes the specified cards (by index number from the list view)
 * create <name> - creates a card with the specified name
 * open <name> - creates or opens the card and enters edit mode
 * columns - changes the list of columns to be displayed

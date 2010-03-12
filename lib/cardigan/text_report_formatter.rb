@@ -18,7 +18,7 @@ module Cardigan
       row 'index', @columns.map {|tuple| tuple.first }
       hline
       hashes.each_with_index do |h,i|
-        row i.to_s, @columns.map {|tuple| h[tuple.first]}
+        row (i+1).to_s, @columns.map {|tuple| h[tuple.first]}
       end
       hline
     end
