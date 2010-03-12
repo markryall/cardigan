@@ -54,7 +54,7 @@ module Cardigan
     end
     
     def columns_command text
-      @columns = text.split(',') if text
+      @columns = text.scan(/\w+/) if text
     end
     
     def filter_command code
@@ -92,7 +92,7 @@ private
     end
 
     def max_field_length cards, name
-      cards.map {|v| v[name] ? v[name].length : 0 }.max
+      cards.map {|card| card[name] ? card[name].length : 0 }.max
     end
  
     def sorted_selection
