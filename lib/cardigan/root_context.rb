@@ -11,11 +11,12 @@ module Cardigan
     def initialize io, repository, name
       @io, @repository, @name = io, repository, name
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
+      @columns = ['name']
     end
 
     def refresh_commands
       @repository.refresh
-      @commands = ['create', 'list', 'filter', 'unfilter']
+      @commands = ['create', 'list', 'filter', 'unfilter', 'columns']
       @repository.cards.each do |card|
         @commands << "open #{card['name']}"
         @commands << "destroy #{card['name']}"
@@ -50,12 +51,18 @@ module Cardigan
       cards = sorted_selection
       formatter = TextReportFormatter.new @io
       a = 0
-      formatter.add_column('name', max_field_length(cards, 'name'))
+      @columns.each do |column|
+        formatter.add_column(column, max_field_length(cards, column))
+      end
       formatter.output cards
     end
     
     def unfilter_command ignored
       @filter = nil
+    end
+    
+    def columns_command text
+      @columns = text.split(',') if text
     end
     
     def filter_command code
