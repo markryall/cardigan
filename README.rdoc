@@ -16,7 +16,7 @@ A simple command line project task tracking tool.
 
   cardigan
 
-This will prompt for your name and email address (for no good reason at the moment), create a folder called .cards in the current directory and enter a shell.
+This will prompt for your name and email address (and store them in ~/.cardigan), create a folder called .cards in the current directory and enter a shell.  The idea is that you will run this at the root of a git/hg/svn/whatever repository and manage the cards in the same way you manage your source code.
 
   cardigan >
 
