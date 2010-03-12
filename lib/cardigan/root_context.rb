@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'uuidtools'
+require 'set'
 require 'cardigan/context'
 require 'cardigan/entry_context'
 require 'cardigan/text_report_formatter'
@@ -26,7 +27,7 @@ module Cardigan
       @repository.save @repository.find_or_create(name)
     end
 
-    def open_command text
+    def open_command name
       card = @repository.find_or_create(name)
       EntryContext.new(@io, card).push
       @repository.save card
@@ -54,7 +55,16 @@ module Cardigan
     end
     
     def columns_command text
-      @columns = text.scan(/\w+/) if text
+      if text
+        @columns = text.scan(/\w+/) 
+      else
+        @io.say "current columns: #{@columns.join(',')}"
+        columns = Set.new
+        sorted_selection.each do |card|
+          columns += card.keys
+        end
+        @io.say "available columns: #{columns.sort.join(',')}"
+      end
     end
     
     def filter_command code

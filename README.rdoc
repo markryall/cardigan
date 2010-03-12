@@ -2,6 +2,12 @@
 
 A simple command line project task tracking tool.
 
+== Rationale
+
+* command line tools are faster and cooler than any gui or web interface
+* it makes sense to store work items in your source repository 
+* tab completion is awesome
+
 == Installation
 
   gem install cardigan
@@ -18,27 +24,26 @@ So what now?
 
 == Listing mode
 
-You are in listing mode.
+You start in listing mode.
 
 The commands available are (with the awesome power of tab completion):
 
-* quit
-* exit
+* quit or exit or ctrl-d - exit
 * list - shows all cards
 * filter <filter> - sets the filter for cards - this is ruby code such as card[:name].start_with?('a')
 * claim <numbers> - sets the owner of the specified cards (by index number from the list view)
-* unclaim <numbers> - removes the specified cards (by index number from the list view)
+* unclaim <numbers> - removes the owner from the specified cards (by index number from the list view)
 * create <name> - creates a card with the specified name
 * open <name> - creates or opens the card and enters edit mode
-* columns - changes the list of columns to be displayed
+* columns - lists or changes the columns to be displayed by the list command
 * destroy <numbers> - deletes the specified cards (by index number from the list view)
 
 == Editing mode
 
-* quit
-* exit
-* set <key> - creates a new key and prompts for the new value
+* quit or exit or ctrl-d - exit
+* show - dumps the values of all card field values
+* set <key> - creates a new field and prompts for the new value
 
 == Future plans
 
-Refer to the .cards for detailed story breakdown but mostly importing, exporting and generating pretty html reports/charts.
+Refer to the .cards for detailed story breakdown but mostly simple worflow, importing, exporting and generating pretty html reports/charts.
