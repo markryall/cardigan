@@ -2,9 +2,9 @@ require 'rubygems'
 require 'uuidtools'
 require 'set'
 require 'cardigan/context'
-require 'cardigan/text_report_formatter'
 require 'cardigan/filtered_repository'
 require 'cardigan/command/create_card'
+require 'cardigan/command/list_cards'
 require 'cardigan/command/open_card'
 
 module Cardigan
@@ -15,14 +15,16 @@ module Cardigan
       @io, @repository, @name = io, FilteredRepository.new(repository, 'name'), name
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @columns = ['name']
-      @commands = {}
-      @commands['create'] = Command::CreateCard.new(@repository)
-      @commands['open'] = Command::OpenCard.new(@repository)
+      @commands = {
+        'list' => Command::ListCards.new(@repository, @io, @columns),
+        'create' => Command::CreateCard.new(@repository),
+        'open' => Command::OpenCard.new(@repository)
+      }
     end
 
     def refresh_commands
       @repository.refresh
-      commands = ['list', 'filter', 'unfilter', 'columns', 'claim', 'unclaim', 'destroy']
+      commands = ['filter', 'unfilter', 'columns', 'claim', 'unclaim', 'destroy']
       commands += @repository.cards.map {|card| "open #{card['name']}" }
       commands
     end
@@ -34,20 +36,10 @@ module Cardigan
       end
     end
 
-    def list_command ignored
-      cards = @repository.cards
-      formatter = TextReportFormatter.new @io
-      a = 0
-      @columns.each do |column|
-        formatter.add_column(column, @repository.max_field_length(column))
-      end
-      formatter.output cards
-    end
-    
     def unfilter_command ignored
       @filter = nil
     end
-    
+
     def columns_command text
       if text
         @columns = text.scan(/\w+/) 
