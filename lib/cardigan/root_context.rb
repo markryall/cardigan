@@ -4,6 +4,7 @@ require 'set'
 require 'cardigan/context'
 require 'cardigan/filtered_repository'
 require 'cardigan/command/create_card'
+require 'cardigan/command/destroy_cards'
 require 'cardigan/command/list_cards'
 require 'cardigan/command/open_card'
 
@@ -16,24 +17,18 @@ module Cardigan
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @columns = ['name']
       @commands = {
-        'list' => Command::ListCards.new(@repository, @io, @columns),
         'create' => Command::CreateCard.new(@repository),
+        'destroy' => Command::DestroyCards.new(@repository, @io),
+        'list' => Command::ListCards.new(@repository, @io, @columns),
         'open' => Command::OpenCard.new(@repository)
       }
     end
 
     def refresh_commands
       @repository.refresh
-      commands = ['filter', 'unfilter', 'columns', 'claim', 'unclaim', 'destroy']
+      commands = ['filter', 'unfilter', 'columns', 'claim', 'unclaim']
       commands += @repository.cards.map {|card| "open #{card['name']}" }
       commands
-    end
-
-    def destroy_command numbers
-      each_card_from_indices(numbers) do |card|
-        @io.say "destroying \"#{card['name']}\""
-        @repository.destroy card
-      end
     end
 
     def unfilter_command ignored
