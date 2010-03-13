@@ -3,11 +3,13 @@ require 'uuidtools'
 require 'set'
 require 'cardigan/context'
 require 'cardigan/filtered_repository'
+require 'cardigan/command/claim_cards'
 require 'cardigan/command/create_card'
 require 'cardigan/command/destroy_cards'
 require 'cardigan/command/filter_cards'
 require 'cardigan/command/list_cards'
 require 'cardigan/command/open_card'
+require 'cardigan/command/unclaim_cards'
 require 'cardigan/command/unfilter_cards'
 
 module Cardigan
@@ -15,15 +17,16 @@ module Cardigan
     include Context
 
     def initialize io, repository, name
-      @io, @repository, @name = io, FilteredRepository.new(repository, 'name'), name
+      @io, @repository, @name = io, FilteredRepository.new(repository, 'name', 'name'), name
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
-      @columns = ['name']
       @commands = {
+        'claim' => Command::ClaimCards.new(@repository, @io),
         'create' => Command::CreateCard.new(@repository),
         'destroy' => Command::DestroyCards.new(@repository, @io),
         'filter' => Command::FilterCards.new(@repository, @io),
-        'list' => Command::ListCards.new(@repository, @io, @columns),
+        'list' => Command::ListCards.new(@repository, @io),
         'open' => Command::OpenCard.new(@repository),
+        'unclaim' => Command::UnclaimCards.new(@repository, @io),
         'unfilter' => Command::UnfilterCards.new(@repository)
       }
     end
@@ -37,30 +40,14 @@ module Cardigan
 
     def columns_command text
       if text
-        @columns = text.scan(/\w+/) 
+        @repository.columns = text.scan(/\w+/) 
       else
-        @io.say "current columns: #{@columns.join(',')}"
+        @io.say "current columns: #{@repository.columns.join(',')}"
         columns = Set.new
-        sorted_selection.each do |card|
+        @repository.cards.each do |card|
           columns += card.keys
         end
         @io.say "available columns: #{columns.sort.join(',')}"
-      end
-    end
-
-    def claim_command numbers
-      each_card_from_indices(numbers) do |card|
-        @io.say "claiming \"#{card['name']}\""
-        card['owner'] = @name
-        @repository.save card
-      end
-    end
-    
-    def unclaim_command numbers
-      each_card_from_indices(numbers) do |card|
-        @io.say "unclaiming \"#{card['name']}\""
-        card.delete('owner')
-        @repository.save card
       end
     end
 
