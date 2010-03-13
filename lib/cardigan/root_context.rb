@@ -9,6 +9,7 @@ require 'cardigan/command/destroy_cards'
 require 'cardigan/command/filter_cards'
 require 'cardigan/command/list_cards'
 require 'cardigan/command/open_card'
+require 'cardigan/command/select_columns'
 require 'cardigan/command/unclaim_cards'
 require 'cardigan/command/unfilter_cards'
 
@@ -21,6 +22,7 @@ module Cardigan
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @commands = {
         'claim' => Command::ClaimCards.new(@repository, @io),
+        'columns' => Command::SelectColumns.new(@repository, @io),
         'create' => Command::CreateCard.new(@repository),
         'destroy' => Command::DestroyCards.new(@repository, @io),
         'filter' => Command::FilterCards.new(@repository, @io),
@@ -33,22 +35,7 @@ module Cardigan
 
     def refresh_commands
       @repository.refresh
-      commands = ['columns', 'claim', 'unclaim']
-      commands += @repository.cards.map {|card| "open #{card['name']}" }
-      commands
-    end
-
-    def columns_command text
-      if text
-        @repository.columns = text.scan(/\w+/) 
-      else
-        @io.say "current columns: #{@repository.columns.join(',')}"
-        columns = Set.new
-        @repository.cards.each do |card|
-          columns += card.keys
-        end
-        @io.say "available columns: #{columns.sort.join(',')}"
-      end
+      @repository.cards.map {|card| "open #{card['name']}" }
     end
 
     def set_command text
