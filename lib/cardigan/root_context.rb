@@ -5,8 +5,10 @@ require 'cardigan/context'
 require 'cardigan/filtered_repository'
 require 'cardigan/command/create_card'
 require 'cardigan/command/destroy_cards'
+require 'cardigan/command/filter_cards'
 require 'cardigan/command/list_cards'
 require 'cardigan/command/open_card'
+require 'cardigan/command/unfilter_cards'
 
 module Cardigan
   class RootContext
@@ -19,20 +21,18 @@ module Cardigan
       @commands = {
         'create' => Command::CreateCard.new(@repository),
         'destroy' => Command::DestroyCards.new(@repository, @io),
+        'filter' => Command::FilterCards.new(@repository, @io),
         'list' => Command::ListCards.new(@repository, @io, @columns),
-        'open' => Command::OpenCard.new(@repository)
+        'open' => Command::OpenCard.new(@repository),
+        'unfilter' => Command::UnfilterCards.new(@repository)
       }
     end
 
     def refresh_commands
       @repository.refresh
-      commands = ['filter', 'unfilter', 'columns', 'claim', 'unclaim']
+      commands = ['columns', 'claim', 'unclaim']
       commands += @repository.cards.map {|card| "open #{card['name']}" }
       commands
-    end
-
-    def unfilter_command ignored
-      @filter = nil
     end
 
     def columns_command text
@@ -47,18 +47,7 @@ module Cardigan
         @io.say "available columns: #{columns.sort.join(',')}"
       end
     end
-    
-    def filter_command code
-      @filter = code
-      begin
-        cards = @repository.cards.select {|card| eval @filter }
-        @io.say "#{cards.count} cards match filter"
-      rescue Exception => e
-        @io.say "Invalid expression:\n#{e.message}"
-        @filter = nil
-      end
-    end
-    
+
     def claim_command numbers
       each_card_from_indices(numbers) do |card|
         @io.say "claiming \"#{card['name']}\""
