@@ -38,13 +38,27 @@ The commands available are (with the awesome power of tab completion):
 * columns - lists or changes the columns to be displayed by the list command
 * destroy <numbers> - deletes the specified cards (by index from the list)
 * set <key> <numbers> - prompts for a field value and sets it on all specified cards (by index from the list)
+* workflow - enters workflow editing mode
 
 == Editing mode
 
 * quit or exit or ctrl-d - exit
 * show - dumps the values of all card field values
 * set <key> - creates a new field and prompts for the new value
+* to <status> - changes the status of the card to the given status (the tab completion will be populated with the valid subsequent statuses from the current status)
+
+== Workflow mode
+
+Workflow is pretty simple - it is just for convenience in specifiying the set of valid statuses for cards with a specific status.
+
+The only purpose is to populate tab completion in editing mode for a card.
+
+* quit or exit or ctrl-d - exit
+* show - dumps the current workflow (statuses with their valid subsequent statuses)
+* create <status> - creates a new status
+* add <status> <statuses> - add the specified statuses as valid transitions from status
+* remove <status> <statuses> - remove the specified statuses as valid transitions from status
 
 == Future plans
 
-Refer to the .cards for detailed story breakdown but mostly simple workflow, importing, exporting and generating pretty html reports/charts.
+Refer to the .cards for detailed story breakdown but importing, exporting and generating pretty html reports/charts.
