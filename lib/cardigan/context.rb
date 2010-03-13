@@ -3,9 +3,9 @@ require 'readline'
 module Cardigan
   module Context
     def refresh
-      refresh_commands if respond_to?(:refresh_commands)
+      commands = respond_to?(:refresh_commands) ? refresh_commands : []
       Readline.completion_proc = lambda do |text|
-        (@commands + ['quit', 'exit']).grep( /^#{Regexp.escape(text)}/ ).sort
+        (commands + @commands.keys + ['quit', 'exit']).grep( /^#{Regexp.escape(text)}/ ).sort
       end
       Readline.completer_word_break_characters = ''
     end
@@ -33,11 +33,15 @@ module Cardigan
       end
       puts
     end
-    
+
     def process_command name, parameter=nil
       m = "#{name}_command".to_sym
       if respond_to?(m)
-        send(m, parameter) 
+        send(m, parameter)
+        return
+      end 
+      if @commands[name]
+        @commands[name].execute parameter
       else
         @io.say 'unknown command'
       end

@@ -2,9 +2,10 @@ require 'rubygems'
 require 'uuidtools'
 require 'set'
 require 'cardigan/context'
-require 'cardigan/entry_context'
 require 'cardigan/text_report_formatter'
 require 'cardigan/filtered_repository'
+require 'cardigan/command/create_card'
+require 'cardigan/command/open_card'
 
 module Cardigan
   class RootContext
@@ -14,24 +15,16 @@ module Cardigan
       @io, @repository, @name = io, FilteredRepository.new(repository, 'name'), name
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @columns = ['name']
+      @commands = {}
+      @commands['create'] = Command::CreateCard.new(@repository)
+      @commands['open'] = Command::OpenCard.new(@repository)
     end
 
     def refresh_commands
       @repository.refresh
-      @commands = ['create', 'list', 'filter', 'unfilter', 'columns', 'claim', 'unclaim', 'destroy']
-      @repository.cards.each do |card|
-        @commands << "open #{card['name']}"
-      end
-    end
-
-    def create_command name
-      @repository.save @repository.find_or_create(name)
-    end
-
-    def open_command name
-      card = @repository.find_or_create(name)
-      EntryContext.new(@io, card).push
-      @repository.save card
+      commands = ['list', 'filter', 'unfilter', 'columns', 'claim', 'unclaim', 'destroy']
+      commands += @repository.cards.map {|card| "open #{card['name']}" }
+      commands
     end
 
     def destroy_command numbers
