@@ -10,6 +10,7 @@ require 'cardigan/command/destroy_cards'
 require 'cardigan/command/filter_cards'
 require 'cardigan/command/list_cards'
 require 'cardigan/command/open_card'
+require 'cardigan/command/open_workflow'
 require 'cardigan/command/select_columns'
 require 'cardigan/command/unclaim_cards'
 require 'cardigan/command/unfilter_cards'
@@ -18,8 +19,8 @@ module Cardigan
   class RootContext
     include Context
 
-    def initialize io, repository, name
-      @io, @repository, @name = io, FilteredRepository.new(repository, 'name', 'name'), name
+    def initialize io, repository, name, workflow_repository
+      @io, @repository, @name, @workflow_repository = io, FilteredRepository.new(repository, 'name', 'name'), name, workflow_repository
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @commands = {
         'claim' => Command::ClaimCards.new(@repository, @io),
@@ -28,10 +29,11 @@ module Cardigan
         'destroy' => Command::DestroyCards.new(@repository, @io),
         'filter' => Command::FilterCards.new(@repository, @io),
         'list' => Command::ListCards.new(@repository, @io),
-        'open' => Command::OpenCard.new(@repository),
+        'open' => Command::OpenCard.new(@repository, @workflow_repository, @io),
         'set' => Command::BatchUpdateCards.new(@repository, @io),
         'unclaim' => Command::UnclaimCards.new(@repository, @io),
-        'unfilter' => Command::UnfilterCards.new(@repository)
+        'unfilter' => Command::UnfilterCards.new(@repository),
+        'workflow' => Command::OpenWorkflow.new(@workflow_repository, @io)
       }
     end
 
