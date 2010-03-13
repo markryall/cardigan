@@ -3,6 +3,7 @@ require 'uuidtools'
 require 'set'
 require 'cardigan/context'
 require 'cardigan/filtered_repository'
+require 'cardigan/command/batch_update_cards'
 require 'cardigan/command/claim_cards'
 require 'cardigan/command/create_card'
 require 'cardigan/command/destroy_cards'
@@ -28,6 +29,7 @@ module Cardigan
         'filter' => Command::FilterCards.new(@repository, @io),
         'list' => Command::ListCards.new(@repository, @io),
         'open' => Command::OpenCard.new(@repository),
+        'set' => Command::BatchUpdateCards.new(@repository, @io),
         'unclaim' => Command::UnclaimCards.new(@repository, @io),
         'unfilter' => Command::UnfilterCards.new(@repository)
       }
@@ -36,21 +38,6 @@ module Cardigan
     def refresh_commands
       @repository.refresh
       @repository.cards.map {|card| "open #{card['name']}" }
-    end
-
-    def set_command text
-      key, *rest = text.scan(/\w+/)
-      value = @io.ask("Enter the new value for #{key}")
-      each_card_from_indices(rest.join(' ')) do |card|
-        if value.empty?
-          @io.say "removing #{key} from '#{card['name']}'"
-          card.delete key
-        else
-          @io.say "setting #{key} to '#{value}' for '#{card['name']}'"
-          card[key] = value
-        end
-        @repository.save card
-      end
     end
   end
 end
