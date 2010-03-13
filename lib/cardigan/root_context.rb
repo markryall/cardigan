@@ -4,13 +4,14 @@ require 'set'
 require 'cardigan/context'
 require 'cardigan/entry_context'
 require 'cardigan/text_report_formatter'
+require 'cardigan/filtered_repository'
 
 module Cardigan
   class RootContext
     include Context
 
     def initialize io, repository, name
-      @io, @repository, @name = io, repository, name
+      @io, @repository, @name = io, FilteredRepository.new(repository, 'name'), name
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @columns = ['name']
     end
@@ -41,11 +42,11 @@ module Cardigan
     end
 
     def list_command ignored
-      cards = sorted_selection
+      cards = @repository.cards
       formatter = TextReportFormatter.new @io
       a = 0
       @columns.each do |column|
-        formatter.add_column(column, max_field_length(cards, column))
+        formatter.add_column(column, @repository.max_field_length(column))
       end
       formatter.output cards
     end
@@ -107,22 +108,6 @@ module Cardigan
         end
         @repository.save card
       end
-    end
-private
-    def each_card_from_indices numbers
-      cards = sorted_selection
-      numbers.scan(/\d+/).each do |n|
-        yield cards[n.to_i - 1]
-      end
-    end
-
-    def max_field_length cards, name
-      cards.map {|card| card[name] ? card[name].length : 0 }.max
-    end
- 
-    def sorted_selection
-      cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
-      cards.sort {|a,b| a['name'] <=> b['name'] }
     end
   end
 end

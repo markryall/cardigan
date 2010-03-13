@@ -31,5 +31,16 @@ module Cardigan
         'name' => name
       }
     end
+
+    def max_field_length name
+      cards.map {|card| card[name] ? card[name].length : 0 }.max
+    end
+
+    def each_card_from_indices numbers
+      cards = sorted_selection
+      numbers.scan(/\d+/).each do |n|
+        yield cards[n.to_i - 1]
+      end
+    end
   end
 end

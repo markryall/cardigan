@@ -18,7 +18,9 @@ module Cardigan
       row 'index', @columns.map {|tuple| tuple.first }
       hline
       hashes.each_with_index do |h,i|
-        row (i+1).to_s, @columns.map {|tuple| h[tuple.first]}
+        first = (i+1).to_s
+        values = @columns.map {|tuple| h[tuple.first]}
+        row first, values 
       end
       hline
     end
@@ -26,7 +28,7 @@ private
     def hline
       @io.say ' ' + '-' * @width
     end
-    
+
     def row first, values
       a = "| #{first.ljust(@heading.length)} | "      
       @columns.each_with_index do |tuple, index|
