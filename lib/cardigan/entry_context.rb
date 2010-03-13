@@ -11,7 +11,16 @@ module Cardigan
     end
 
     def refresh_commands
-      ['set', 'show']
+      commands = ['set', 'show']
+      status = @entry['status'] || 'none'
+      @workflow_repository.load[status].each do |s|
+        commands << "now #{s}"
+      end
+      commands
+    end
+
+    def now_command status
+      @entry['status'] = status
     end
 
     def set_command key

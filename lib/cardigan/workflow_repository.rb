@@ -8,7 +8,7 @@ module Cardigan
     def save workflow
       @directory.store @path, workflow
     end
-    
+
     def load
       @directory.has_file?(@path) ? @directory.load(@path) : {}
     end
