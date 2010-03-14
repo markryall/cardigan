@@ -35,7 +35,8 @@ The commands available are (with the awesome power of tab completion):
 * unclaim <numbers> - removes the owner from the specified cards (by index from the list)
 * create <name> - creates a card with the specified name
 * open <name> - creates or opens the card and enters edit mode
-* columns - lists or changes the columns to be displayed by the list command
+* display <columns> - lists or changes the columns to be displayed by the list command
+* sort <columns> - lists or changes the columns to be used for sorting by the list command
 * destroy <numbers> - deletes the specified cards (by index from the list)
 * set <key> <numbers> - prompts for a field value and sets it on all specified cards (by index from the list)
 * workflow - enters workflow editing mode
@@ -45,13 +46,13 @@ The commands available are (with the awesome power of tab completion):
 * quit or exit or ctrl-d - exit
 * show - dumps the values of all card field values
 * set <key> - creates a new field and prompts for the new value
-* to <status> - changes the status of the card to the given status (the tab completion will be populated with the valid subsequent statuses from the current status)
+* now <status> - changes the status of the card to the given status (the tab completion will be populated with the valid subsequent statuses from the current status)
 
 == Workflow mode
 
-Workflow is pretty simple - it is just for convenience in specifiying the set of valid statuses for cards with a specific status.
+Workflow is pretty simple - it is just for convenience in specifiying the set of valid transitions for cards with a specific status.
 
-The only purpose is to populate tab completion in editing mode for a card.
+The only purpose is to populate tab completion for the 'now' command in edit mode for a card.
 
 * quit or exit or ctrl-d - exit
 * show - dumps the current workflow (statuses with their valid subsequent statuses)
@@ -61,4 +62,4 @@ The only purpose is to populate tab completion in editing mode for a card.
 
 == Future plans
 
-Refer to the .cards for detailed story breakdown but importing, exporting and generating pretty html reports/charts.
+Refer to the .cards for detailed story breakdown but importing, exporting, automatic vcs interaction and generating pretty html reports/charts seem to be the most important missing features.
