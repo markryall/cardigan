@@ -8,11 +8,12 @@ module Cardigan
 
     def_delegators :@repository, :refresh, :save, :destroy, :find_or_create
 
-    def initialize repository, *columns
-      @repository, @sort_columns, @display_columns = repository, columns, columns
+    def initialize repository, user, *columns
+      @repository, @sort_columns, @display_columns, @user = repository, columns, columns, user
     end
 
     def cards
+      me = @user
       cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
       cards.sort do |a,b|
         a_values = sort_columns.map {|col| a[col] ? a[col] : '' }

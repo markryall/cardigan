@@ -21,7 +21,7 @@ module Cardigan
     include Context
 
     def initialize io, repository, name, workflow_repository
-      @io, @repository, @name, @workflow_repository = io, FilteredRepository.new(repository, 'name'), name, workflow_repository
+      @io, @repository, @name, @workflow_repository = io, FilteredRepository.new(repository, name, 'name'), name, workflow_repository
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @commands = {
         'claim' => Command::ClaimCards.new(@repository, @io),
