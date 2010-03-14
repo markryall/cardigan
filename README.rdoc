@@ -60,6 +60,10 @@ The only purpose is to populate tab completion for the 'now' command in edit mod
 * add <status> <statuses> - add the specified statuses as valid transitions from status
 * remove <status> <statuses> - remove the specified statuses as valid transitions from status
 
+== Walkthroughs
+
+In case this documentation makes no sense at all, a few usage scenarios can be found here: http://gist.github.com/331647
+
 == Future plans
 
 Refer to the .cards for detailed story breakdown but importing, exporting, automatic vcs interaction and generating pretty html reports/charts seem to be the most important missing features.
