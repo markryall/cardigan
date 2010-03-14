@@ -3,18 +3,6 @@ require 'uuidtools'
 require 'set'
 require 'cardigan/context'
 require 'cardigan/filtered_repository'
-require 'cardigan/command/batch_update_cards'
-require 'cardigan/command/claim_cards'
-require 'cardigan/command/create_card'
-require 'cardigan/command/destroy_cards'
-require 'cardigan/command/filter_cards'
-require 'cardigan/command/list_cards'
-require 'cardigan/command/open_card'
-require 'cardigan/command/open_workflow'
-require 'cardigan/command/specify_display_columns'
-require 'cardigan/command/specify_sort_columns'
-require 'cardigan/command/unclaim_cards'
-require 'cardigan/command/unfilter_cards'
 
 module Cardigan
   class RootContext
@@ -24,18 +12,18 @@ module Cardigan
       @io, @repository, @name, @workflow_repository = io, FilteredRepository.new(repository, name, 'name'), name, workflow_repository
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @commands = {
-        'claim' => Command::ClaimCards.new(@repository, @io),
-        'create' => Command::CreateCard.new(@repository),
-        'destroy' => Command::DestroyCards.new(@repository, @io),
-        'display' => Command::SpecifyDisplayColumns.new(@repository, @io),
-        'filter' => Command::FilterCards.new(@repository, @io),
-        'list' => Command::ListCards.new(@repository, @io),
-        'open' => Command::OpenCard.new(@repository, @workflow_repository, @io),
-        'set' => Command::BatchUpdateCards.new(@repository, @io),
-        'sort' => Command::SpecifySortColumns.new(@repository, @io),
-        'unclaim' => Command::UnclaimCards.new(@repository, @io),
-        'unfilter' => Command::UnfilterCards.new(@repository),
-        'workflow' => Command::OpenWorkflow.new(@workflow_repository, @io)
+        'claim' => command(:claim_cards, @repository, @io, @name),
+        'create' => command(:create_card, @repository),
+        'destroy' => command(:destroy_cards, @repository, @io),
+        'display' => command(:specify_display_columns, @repository, @io),
+        'filter' => command(:filter_cards, @repository, @io),
+        'list' => command(:list_cards, @repository, @io),
+        'open' => command(:open_card, @repository, @workflow_repository, @io),
+        'set' => command(:batch_update_cards, @repository, @io),
+        'sort' => command(:specify_sort_columns, @repository, @io),
+        'unclaim' => command(:unclaim_cards, @repository, @io),
+        'unfilter' => command(:unfilter_cards, @repository),
+        'workflow' => command(:open_workflow, @workflow_repository, @io)
       }
     end
 

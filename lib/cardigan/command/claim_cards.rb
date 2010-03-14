@@ -1,8 +1,8 @@
 module Cardigan
   module Command
     class ClaimCards
-      def initialize repository, io
-        @repository, @io = repository, io
+      def initialize repository, io, name
+        @repository, @io, @name = repository, io, name
       end
 
       def execute numbers

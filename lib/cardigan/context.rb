@@ -1,7 +1,13 @@
 require 'readline'
+require 'active_support/inflector'
 
 module Cardigan
   module Context
+    def command name, *args
+      require "cardigan/command/#{name}"
+      Command.const_get(name.to_s.camelize).new(*args)
+    end
+
     def refresh
       commands = respond_to?(:refresh_commands) ? refresh_commands : []
       Readline.completion_proc = lambda do |text|
