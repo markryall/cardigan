@@ -2,4 +2,6 @@
 name: card workflow
 tags: workflow,cards
 id: a64fa75e-0ea4-4d2b-9a10-54e7c1c38fb2
+foo bar: ""
+status: started
 owner: "\"Mark Ryall\" <mark.ryall@gmail.com>"

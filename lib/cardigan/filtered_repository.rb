@@ -2,19 +2,23 @@ require 'forwardable'
 
 module Cardigan
   class FilteredRepository
-    attr_accessor :filter, :columns, :sort
+    attr_accessor :filter, :sort_columns, :display_columns
 
     extend Forwardable
 
     def_delegators :@repository, :refresh, :save, :destroy, :find_or_create
 
-    def initialize repository, sort, *columns
-      @repository, @sort, @columns = repository, sort, columns
+    def initialize repository, *columns
+      @repository, @sort_columns, @display_columns = repository, columns, columns
     end
 
     def cards
       cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
-      cards.sort {|a,b| a[sort] <=> b[sort] }
+      cards.sort do |a,b|
+        a_values = sort_columns.map {|col| a[col] ? a[col] : '' }
+        b_values = sort_columns.map {|col| b[col] ? b[col] : '' }
+        a_values <=> b_values
+      end
     end
 
     def max_field_length name

@@ -7,9 +7,9 @@ module Cardigan
 
       def execute text
         if text
-          @repository.columns = text.scan(/\w+/) 
+          @repository.display_columns = text.scan(/\w+/) 
         else
-          @io.say "current columns: #{@repository.columns.join(',')}"
+          @io.say "current columns: #{@repository.display_columns.join(',')}"
           columns = Set.new
           @repository.cards.each {|card| columns += card.keys }
           @io.say "available columns: #{columns.sort.join(',')}"
