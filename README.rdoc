@@ -40,6 +40,8 @@ The commands available are (with the awesome power of tab completion):
 * destroy <numbers> - deletes the specified cards (by index from the list)
 * set <key> <numbers> - prompts for a field value and sets it on all specified cards (by index from the list)
 * workflow - enters workflow editing mode
+* count <grouping fields> - counts the number of cards for each combination of the grouping fields
+* total <numeric field> <grouping fields> - calculates the total of the specified numeric field for each combination of the grouping fields
 
 == Editing mode
 
