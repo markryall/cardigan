@@ -6,7 +6,7 @@ module Cardigan
       end
 
       def execute ignored=nil
-        @entry.keys.sort.each { |key| @io.say "#{key}: #{@entry[key]}" }
+        @entry.keys.sort.each { |key| @io.say "#{key}: #{@entry[key].inspect}" }
       end
     end
   end

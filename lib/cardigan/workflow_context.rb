@@ -7,11 +7,13 @@ module Cardigan
     def initialize io, entry
       @io, @entry = io, entry
       @prompt_text = "#{File.expand_path('.').split('/').last.slice(0..0)}/workflow > "
-      @commands = {}
+      @commands = {
+        'list' => command(:show_entry, @entry, @io)
+      }
     end
 
     def refresh_commands
-      ['create', 'add', 'remove', 'show']
+      ['create', 'add', 'remove']
     end
 
     def create_command key
@@ -26,12 +28,6 @@ module Cardigan
     def remove_command text
       name, *states = text.scan(/\w+/)
       @entry[name] -= states
-    end
-
-    def show_command ignored=nil
-      @entry.keys.sort.each do |key|
-        @io.say "#{key}: #{@entry[key].join(',')}"
-      end
     end
   end
 end

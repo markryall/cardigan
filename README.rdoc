@@ -55,7 +55,7 @@ Workflow is pretty simple - it is just for convenience in specifiying the set of
 The only purpose is to populate tab completion for the 'now' command in edit mode for a card.
 
 * quit or exit or ctrl-d - exit
-* show - dumps the current workflow (statuses with their valid subsequent statuses)
+* list - dumps the current workflow (statuses with their valid subsequent statuses)
 * create <status> - creates a new status
 * add <status> <statuses> - add the specified statuses as valid transitions from status
 * remove <status> <statuses> - remove the specified statuses as valid transitions from status
