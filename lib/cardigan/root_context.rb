@@ -23,7 +23,9 @@ module Cardigan
         'sort' => command(:specify_sort_columns, @repository, @io),
         'unclaim' => command(:unclaim_cards, @repository, @io),
         'unfilter' => command(:unfilter_cards, @repository),
-        'workflow' => command(:open_workflow, @workflow_repository, @io)
+        'workflow' => command(:open_workflow, @workflow_repository, @io),
+        'count' => command(:count_cards, @repository, @io),
+        'total' => command(:total_cards, @repository, @io),
       }
     end
 

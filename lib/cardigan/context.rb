@@ -2,6 +2,9 @@ require 'readline'
 require 'active_support/inflector'
 
 module Cardigan
+  module Command
+  end
+
   module Context
     def command name, *args
       require "cardigan/command/#{name}"
