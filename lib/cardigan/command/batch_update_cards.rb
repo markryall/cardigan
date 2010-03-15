@@ -1,3 +1,5 @@
+require 'cardigan/card_editor'
+
 module Cardigan
   module Command
     class BatchUpdateCards
@@ -9,13 +11,7 @@ module Cardigan
         key, *rest = text.scan(/\w+/)
         value = @io.ask("Enter the new value for #{key}")
         @repository.each_card_from_indices(rest.join(' ')) do |card|
-          if value.empty?
-            @io.say "removing #{key} from '#{card['name']}'"
-            card.delete key
-          else
-            @io.say "setting #{key} to '#{value}' for '#{card['name']}'"
-            card[key] = value
-          end
+          Cardigan::CardEditor.new(card, @io).set key, value
           @repository.save card
         end
       end

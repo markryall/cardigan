@@ -7,30 +7,16 @@ module Cardigan
     def initialize io, workflow_repository, entry
       @io, @workflow_repository, @entry = io, workflow_repository, entry
       @prompt_text = "#{File.expand_path('.').split('/').last.slice(0..0)}/#{entry['name']} > "
-      @commands = {}
+      @commands = {
+        'now' => command(:change_status, @entry),
+        'set' => command(:change_value, @entry, @io),
+        'list' => command(:show_entry, @entry, @io)
+      }
     end
 
     def refresh_commands
-      commands = ['set', 'show']
       status = @entry['status'] || 'none'
-      @workflow_repository.load[status].each do |s|
-        commands << "now #{s}"
-      end
-      commands
-    end
-
-    def now_command status
-      @entry['status'] = status
-    end
-
-    def set_command key
-      @entry[key] = @io.ask("Enter the new value for #{key}")
-    end
-
-    def show_command ignored=nil
-      @entry.keys.sort.each do |key|
-        @io.say "#{key}: #{@entry[key]}"
-      end
+      @workflow_repository.load[status].map { |s| "now #{s}" }
     end
   end
 end

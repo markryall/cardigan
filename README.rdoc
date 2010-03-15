@@ -44,7 +44,7 @@ The commands available are (with the awesome power of tab completion):
 == Editing mode
 
 * quit or exit or ctrl-d - exit
-* show - dumps the values of all card field values
+* list - dumps the values of all card field values
 * set <key> - creates a new field and prompts for the new value
 * now <status> - changes the status of the card to the given status (the tab completion will be populated with the valid subsequent statuses from the current status)
 
