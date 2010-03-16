@@ -6,6 +6,7 @@ class Cardigan::Command::ExportCards
   end
 
   def execute filename
+    filename += ".csv"
     columns = @repository.columns
     CSV.open(filename, 'w') do |writer|
       writer << columns

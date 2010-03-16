@@ -6,7 +6,7 @@ module Cardigan
 
     extend Forwardable
 
-    def_delegators :@repository, :refresh, :save, :destroy, :find_or_create, :columns
+    def_delegators :@repository, :refresh, :save, :destroy, :find_or_create, :columns, :load, :create
 
     def initialize repository, user, *columns
       @repository, @sort_columns, @display_columns, @user = repository, columns, columns, user

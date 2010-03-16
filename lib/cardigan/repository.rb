@@ -1,3 +1,5 @@
+require 'rubygems'
+require 'uuidtools'
 require 'set'
 require 'cardigan/directory'
 
@@ -27,10 +29,7 @@ module Cardigan
     end
 
     def find_or_create name
-      card = find_card(name)
-      card or { 'id' => UUIDTools::UUID.random_create.to_s,
-        'name' => name
-      }
+      find_card(name) or create('name' => name)
     end
 
     def each
@@ -41,6 +40,15 @@ module Cardigan
       columns = Set.new
       each {|card| columns += card.keys }
       columns.to_a
+    end
+
+    def load id
+      file = "#{id}.card"
+      @directory.has_file?(file) ? @directory.load(file) : nil
+    end
+    
+    def create hash={}
+      { 'id' => UUIDTools::UUID.random_create.to_s }.merge hash
     end
   end
 end

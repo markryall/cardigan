@@ -1,6 +1,3 @@
-require 'rubygems'
-require 'uuidtools'
-require 'set'
 require 'cardigan/context'
 require 'cardigan/filtered_repository'
 
@@ -27,7 +24,7 @@ module Cardigan
         'count' => command(:count_cards, @repository, @io),
         'total' => command(:total_cards, @repository, @io),
         'export' => command(:export_cards, @repository),
-        'import' => command(:import_cards, @repository)
+        'import' => command(:import_cards, @repository, @io)
       }
     end
 

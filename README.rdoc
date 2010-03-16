@@ -42,6 +42,8 @@ The commands available are (with the awesome power of tab completion):
 * workflow - enters workflow editing mode
 * count <grouping fields> - counts the number of cards for each combination of the grouping fields
 * total <numeric field> <grouping fields> - calculates the total of the specified numeric field for each combination of the grouping fields
+* export <filename> - writes all columns for current filtered cards to <filename>.csv
+* import <filename> - imports all cards from <filename>.csv - cards will be updated with a matching id, otherwise new cards will be created.
 
 == Editing mode
 
