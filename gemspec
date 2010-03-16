@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = 'cardigan'
-  spec.version = '0.0.7'
+  spec.version = '0.0.8'
   spec.summary = "command line utility for managing cards (tasks, bugs, stories or whatever)"
   spec.description = <<-EOF
 A command line utility that manages cards as individual files so that they can be added to a version control system
