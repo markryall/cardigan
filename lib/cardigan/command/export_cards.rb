@@ -6,5 +6,12 @@ class Cardigan::Command::ExportCards
   end
 
   def execute filename
+    columns = @repository.columns
+    CSV.open(filename, 'w') do |writer|
+      writer << columns
+      @repository.each do |card|
+        writer << columns.map {|column| card[column] ? card[column] : ''}
+      end
+    end
   end
 end
