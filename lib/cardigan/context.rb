@@ -1,4 +1,5 @@
 require 'readline'
+require 'rubygems'
 require 'active_support/inflector'
 
 module Cardigan
