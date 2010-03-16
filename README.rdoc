@@ -70,4 +70,4 @@ In case this documentation makes no sense at all, a few usage scenarios can be f
 
 == Future plans
 
-Refer to the .cards for detailed story breakdown but importing, exporting, automatic vcs interaction and generating pretty html reports/charts seem to be the most important missing features.
+Refer to the .cards for detailed story breakdown but automatic vcs interaction and generating pretty html reports/charts seem to be the most important missing features.
