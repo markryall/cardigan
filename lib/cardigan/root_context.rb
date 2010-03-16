@@ -26,6 +26,8 @@ module Cardigan
         'workflow' => command(:open_workflow, @workflow_repository, @io),
         'count' => command(:count_cards, @repository, @io),
         'total' => command(:total_cards, @repository, @io),
+        'export' => command(:export_cards, @repository),
+        'import' => command(:import_cards, @repository)
       }
     end
 
