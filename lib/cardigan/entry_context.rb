@@ -16,7 +16,8 @@ module Cardigan
 
     def refresh_commands
       status = @entry['status'] || 'none'
-      @workflow_repository.load[status].map { |s| "now #{s}" }
+      next_statuses = @workflow_repository.load[status]
+      next_statuses ? next_statuses.map { |s| "now #{s}" } : []
     end
   end
 end
