@@ -19,7 +19,7 @@ module Cardigan
         'set' => command(:batch_update_cards, @repository, @io),
         'sort' => command(:specify_sort_columns, @repository, @io),
         'unclaim' => command(:unclaim_cards, @repository, @io),
-        'unfilter' => command(:unfilter_cards, @repository),
+        'unfilter' => command(:unfilter_cards, @repository, @io),
         'workflow' => command(:open_workflow, @workflow_repository, @io),
         'count' => command(:count_cards, @repository, @io),
         'total' => command(:total_cards, @repository, @io),

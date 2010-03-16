@@ -1,13 +1,8 @@
-module Cardigan
-  module Command
-    class UnfilterCards
-      def initialize repository
-        @repository = repository
-      end
+require 'cardigan/command/list_cards'
 
-      def execute ignored
-        @repository.filter = nil
-      end
-    end
+class Cardigan::Command::UnfilterCards < Cardigan::Command::ListCards
+  def execute filter
+    @repository.filter = nil
+    super
   end
 end

@@ -1,16 +1,10 @@
-require 'cardigan/command/display_cards'
+require 'cardigan/command/list_cards'
 
-class Cardigan::Command::SpecifyDisplayColumns
-  include Cardigan::Command::DisplayCards
-
-  def initialize repository, io
-    @repository, @io = repository, io
-  end
-
+class Cardigan::Command::SpecifyDisplayColumns < Cardigan::Command::ListCards
   def execute text
     if text
       @repository.display_columns = text.scan(/\w+/)
-      display_cards
+      super
     else
       @io.say "current columns: #{@repository.display_columns.join(',')}"
       @io.say "available columns: #{@repository.columns.sort.join(',')}"
