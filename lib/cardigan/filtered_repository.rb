@@ -6,7 +6,7 @@ module Cardigan
 
     extend Forwardable
 
-    def_delegators :@repository, :refresh, :save, :destroy, :find_or_create
+    def_delegators :@repository, :refresh, :save, :destroy, :find_or_create, :columns
 
     def initialize repository, user, *columns
       @repository, @sort_columns, @display_columns, @user = repository, columns, columns, user
@@ -20,6 +20,10 @@ module Cardigan
         b_values = sort_columns.map {|col| b[col] ? b[col] : '' }
         a_values <=> b_values
       end
+    end
+
+    def each
+      cards.each {|card| yield card }
     end
 
     def max_field_length name

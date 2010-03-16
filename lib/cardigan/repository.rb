@@ -1,3 +1,4 @@
+require 'set'
 require 'cardigan/directory'
 
 module Cardigan
@@ -30,6 +31,16 @@ module Cardigan
       card or { 'id' => UUIDTools::UUID.random_create.to_s,
         'name' => name
       }
+    end
+
+    def each
+      @cards.each {|card| yield card}
+    end
+
+    def columns
+      columns = Set.new
+      each {|card| columns += card.keys }
+      columns.to_a
     end
   end
 end
