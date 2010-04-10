@@ -7,7 +7,14 @@ describe Cardigan::Command::TotalCards do
   before do
     @command = Cardigan::Command::TotalCards.new(stub(:repository), stub(:io))
   end
-  
+
+  [nil, ''].each do |parameter|
+    it "should count single row when called with #{parameter}" do
+      @command.execute parameter
+      io_output.should == "missing required numeric total field\n"
+    end
+  end
+
   it 'should extract value for single row when no grouping fields are provided' do
     so_when(:repository).receives(:each).yield('points' => 1)
     @command.execute "points"

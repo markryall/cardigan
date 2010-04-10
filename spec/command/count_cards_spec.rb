@@ -8,16 +8,18 @@ describe Cardigan::Command::CountCards do
     @command = Cardigan::Command::CountCards.new(stub(:repository), stub(:io))
   end
 
-  it 'should count single row when no grouping fields are provided' do
-    @command.execute
+  [nil, ''].each do |parameter|
+    it "should count single row when called with #{parameter}" do
+      @command.execute parameter
 
-    io_output.should == <<EOF
+      io_output.should == <<EOF
  -------
 | count |
  -------
 | 0     |
  -------
 EOF
+    end
   end
 
   it 'should count single row when no grouping fields are provided' do

@@ -6,8 +6,12 @@ class Cardigan::Command::TotalCards
     @repository, @io = repository, io
   end
 
-  def execute text
-    count_field, *grouping_fields = text.scan(/\w+/)
+  def execute text=nil    
+    count_field, *grouping_fields = text.scan(/\w+/) if text
+    unless count_field
+      @io.say 'missing required numeric total field'
+      return
+    end
     counts = {}
     @repository.each do |card|
       key = grouping_fields.map {|grouping_field| card[grouping_field] ? card[grouping_field] : ''}

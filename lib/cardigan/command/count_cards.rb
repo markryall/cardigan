@@ -6,7 +6,8 @@ class Cardigan::Command::CountCards
     @repository, @io = repository, io
   end
 
-  def execute text=''
+  def execute text=nil
+    text = '' unless text
     grouping_fields = text.scan(/\w+/)
     lengths = Array.new(grouping_fields.size, 0)
     counts = {}
