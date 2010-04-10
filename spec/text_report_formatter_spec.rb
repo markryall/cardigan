@@ -2,6 +2,8 @@ require File.dirname(__FILE__)+'/spec_helper'
 require 'cardigan/text_report_formatter'
 
 describe Cardigan::TextReportFormatter do
+  include IoOutputReader
+
   before do
     @formatter = Cardigan::TextReportFormatter.new(stub(:io))
   end
@@ -11,16 +13,10 @@ describe Cardigan::TextReportFormatter do
     calls.should == []
   end
 
-  def output
-    out = StringIO.new
-    calls.each {|call| out.puts(call.args.first)}
-    out.string
-  end
-
   it 'should write a heading with a column but no rows' do
     @formatter.add_column 'foo', 10
     @formatter.output []
-    output.should == <<EOF
+    io_output.should == <<EOF
  --------------------
 | index | foo        |
  --------------------
@@ -31,7 +27,7 @@ EOF
   it 'should write a heading with a column but no rows' do
     @formatter.add_column 'foo', 10
     @formatter.output [], :suppress_index => true
-    output.should == <<EOF
+    io_output.should == <<EOF
  ------------
 | foo        |
  ------------
@@ -42,7 +38,7 @@ EOF
   it 'should resize column according to size of heading' do
     @formatter.add_column 'foo', 0
     @formatter.output [], :suppress_index => true
-    output.should == <<EOF
+    io_output.should == <<EOF
  -----
 | foo |
  -----
