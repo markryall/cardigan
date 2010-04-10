@@ -25,17 +25,17 @@ module Cardigan
     end
 private
     def hline width
-      @io.say ' ' + '-' * width
+      @io.say ' ' + '-' * (width - 2)
     end
 
     def calculate_width suppress_index
-      width = suppress_index ? 0 : INDEX_HEADING.length + 3
+      width = suppress_index ? 1 : INDEX_HEADING.length + 4
       @columns.each {|column| width += column[1] + 3}
       width
     end
 
     def row first, values, suppress_index
-      a = suppress_index ? "| " : "| #{first.ljust(INDEX_HEADING.length)} | "      
+      a = suppress_index ? "|" : "| #{first.ljust(INDEX_HEADING.length)} |"      
       @columns.each_with_index do |tuple, index|
         a << " #{values[index].to_s.ljust(tuple[1])} |"
       end
