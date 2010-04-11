@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'shell_shock/context'
 require 'cardigan/commands'
 require 'cardigan/filtered_repository'

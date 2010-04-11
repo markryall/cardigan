@@ -5,6 +5,9 @@ require 'cardigan/directory'
 
 module Cardigan
   class Repository
+    extend Forwardable
+    def_delegators :@cards, :each, :find
+
     attr_reader :cards
 
     def initialize path
@@ -17,7 +20,7 @@ module Cardigan
     end
 
     def find_card name
-      @cards.find {|card| card['name'] == name}
+      find {|card| card['name'] == name}
     end
 
     def save card
