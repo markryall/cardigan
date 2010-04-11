@@ -10,6 +10,7 @@ module Cardigan
       @commands = {
         'now' => command(:change_status, @entry),
         'set' => command(:change_value, @entry, @io),
+        'edit' => command(:edit_value, @entry, @io),
         'list' => command(:show_entry, @entry, @io)
       }
     end

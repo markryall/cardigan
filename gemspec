@@ -13,6 +13,7 @@ EOF
   spec.files = Dir['lib/**/*'] + Dir['bin/*'] + ['README.rdoc', 'MIT-LICENSE']
   spec.executables << 'cardigan'
 
+  spec.add_dependency 'splat', ['~>0.1.0']
   spec.add_dependency 'uuidtools', ['~>2.1.1']
   spec.add_dependency 'activesupport', ['~>2.3.5']
 end
