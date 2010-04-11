@@ -1,2 +1,1 @@
-gem 'gemesis', '~>0.0.2'
-gem 'uuidtools', '~>2.1.1'
+Gem::Specification.load('gemspec').dependencies.each { |dep| gem dep.name, dep.requirement }
