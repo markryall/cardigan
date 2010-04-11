@@ -1,4 +1,3 @@
-require 'cardigan/context'
 require 'cardigan/text_report_formatter'
 
 class Cardigan::Command::TotalCards

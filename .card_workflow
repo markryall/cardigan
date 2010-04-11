@@ -1,8 +1,10 @@
 --- 
+to_verify: []
+
 none: 
 - started
 - blocked
+started: 
+- to_verify
 blocked: []
-
-started: []
 

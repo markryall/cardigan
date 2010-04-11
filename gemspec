@@ -14,6 +14,6 @@ EOF
   spec.executables << 'cardigan'
 
   spec.add_dependency 'splat', ['~>0.1.0']
+  spec.add_dependency 'shell_shock', ['~>0.0.1']
   spec.add_dependency 'uuidtools', ['~>2.1.1']
-  spec.add_dependency 'activesupport', ['~>2.3.5']
 end

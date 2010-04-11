@@ -9,7 +9,7 @@ module Cardigan
       @in_io.gets.chomp
     end
     
-    def say message
+    def say message=''
       @out_io.puts message
     end
   end

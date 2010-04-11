@@ -26,6 +26,10 @@ module Cardigan
       cards.each {|card| yield card }
     end
 
+    def map
+      cards.map {|card| yield card }
+    end
+
     def max_field_length name
       cards.map {|card| card[name] ? card[name].length : 0 }.max
     end

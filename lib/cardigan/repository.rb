@@ -32,10 +32,6 @@ module Cardigan
       find_card(name) or create('name' => name)
     end
 
-    def each
-      @cards.each {|card| yield card}
-    end
-
     def columns
       columns = Set.new
       each {|card| columns += card.keys }

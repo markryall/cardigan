@@ -1,24 +1,19 @@
-require 'cardigan/context'
+require 'shell_shock/context'
+require 'cardigan/commands'
 
 module Cardigan
   class EntryContext
-    include Context
+    include ShellShock::Context
 
     def initialize io, workflow_repository, entry
       @io, @workflow_repository, @entry = io, workflow_repository, entry
       @prompt_text = "#{File.expand_path('.').split('/').last.slice(0..0)}/#{entry['name']} > "
       @commands = {
-        'now' => command(:change_status, @entry),
-        'set' => command(:change_value, @entry, @io),
-        'edit' => command(:edit_value, @entry, @io),
-        'list' => command(:show_entry, @entry, @io)
+        'now'  => Command.load(:change_status, @entry, @workflow_repository),
+        'set'  => Command.load(:change_value, @entry, @io),
+        'edit' => Command.load(:edit_value, @entry, @io),
+        'list' => Command.load(:show_entry, @entry, @io)
       }
-    end
-
-    def refresh_commands
-      status = @entry['status'] || 'none'
-      next_statuses = @workflow_repository.load[status]
-      next_statuses ? next_statuses.map { |s| "now #{s}" } : []
     end
   end
 end

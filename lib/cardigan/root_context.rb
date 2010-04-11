@@ -1,36 +1,36 @@
-require 'cardigan/context'
+require 'shell_shock/context'
+require 'cardigan/commands'
 require 'cardigan/filtered_repository'
 
 module Cardigan
   class RootContext
-    include Context
+    include ShellShock::Context
 
     def initialize io, repository, name, workflow_repository
       @io, @repository, @name, @workflow_repository = io, FilteredRepository.new(repository, name, 'name'), name, workflow_repository
       @prompt_text = "#{File.expand_path('.').split('/').last} > "
       @commands = {
-        'claim' => command(:claim_cards, @repository, @io, @name),
-        'create' => command(:create_card, @repository),
-        'destroy' => command(:destroy_cards, @repository, @io),
-        'display' => command(:specify_display_columns, @repository, @io),
-        'filter' => command(:filter_cards, @repository, @io),
-        'list' => command(:list_cards, @repository, @io),
-        'open' => command(:open_card, @repository, @workflow_repository, @io),
-        'set' => command(:batch_update_cards, @repository, @io),
-        'sort' => command(:specify_sort_columns, @repository, @io),
-        'unclaim' => command(:unclaim_cards, @repository, @io),
-        'unfilter' => command(:unfilter_cards, @repository, @io),
-        'workflow' => command(:open_workflow, @workflow_repository, @io),
-        'count' => command(:count_cards, @repository, @io),
-        'total' => command(:total_cards, @repository, @io),
-        'export' => command(:export_cards, @repository),
-        'import' => command(:import_cards, @repository, @io)
+        'claim'    => Command.load(:claim_cards, @repository, @io, @name),
+        'create'   => Command.load(:create_card, @repository),
+        'destroy'  => Command.load(:destroy_cards, @repository, @io),
+        'display'  => Command.load(:specify_display_columns, @repository, @io),
+        'filter'   => Command.load(:filter_cards, @repository, @io),
+        'list'     => Command.load(:list_cards, @repository, @io),
+        'open'     => Command.load(:open_card, @repository, @workflow_repository, @io),
+        'set'      => Command.load(:batch_update_cards, @repository, @io),
+        'sort'     => Command.load(:specify_sort_columns, @repository, @io),
+        'unclaim'  => Command.load(:unclaim_cards, @repository, @io),
+        'unfilter' => Command.load(:unfilter_cards, @repository, @io),
+        'workflow' => Command.load(:open_workflow, @workflow_repository, @io),
+        'count'    => Command.load(:count_cards, @repository, @io),
+        'total'    => Command.load(:total_cards, @repository, @io),
+        'export'   => Command.load(:export_cards, @repository),
+        'import'   => Command.load(:import_cards, @repository, @io)
       }
     end
 
     def refresh_commands
       @repository.refresh
-      @repository.cards.map {|card| "open #{card['name']}" }
     end
   end
 end
