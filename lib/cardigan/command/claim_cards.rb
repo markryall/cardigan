@@ -4,7 +4,7 @@ class Cardigan::Command::ClaimCards
   end
 
   def execute numbers
-    @repository.each_card_from_indices(numbers) do |card|
+    @repository.each_card_from_indices(numbers || '') do |card|
       @io.say "claiming \"#{card['name']}\""
       card['owner'] = @name
       @repository.save card

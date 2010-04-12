@@ -4,7 +4,7 @@ class Cardigan::Command::UnclaimCards
   end
 
   def execute numbers
-    @repository.each_card_from_indices(numbers) do |card|
+    @repository.each_card_from_indices(numbers || '') do |card|
       @io.say "unclaiming \"#{card['name']}\""
       card.delete('owner')
       @repository.save card
