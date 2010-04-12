@@ -1,3 +1,5 @@
+require 'active_support/inflector'
+
 module Cardigan
   module Command
     def self.load name, *args
