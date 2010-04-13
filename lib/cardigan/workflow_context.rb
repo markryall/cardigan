@@ -11,7 +11,7 @@ module Cardigan
       @commands = {
         'list'               => Command.load(:show_entry, @entry, @io),
         'create_status'      => Command.load(:create_status, @entry),
-        'add_transitions'    => Command.load(:add_transitions, @entry),
+        'add_transitions'    => Command.load(:add_transitions, @entry, @io),
         'remove_transitions' => Command.load(:remove_transitions, @entry),
       }
     end
