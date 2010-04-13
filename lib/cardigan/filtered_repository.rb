@@ -2,10 +2,11 @@ require 'forwardable'
 
 module Cardigan
   class FilteredRepository
+    include Enumerable
+
     attr_accessor :filter, :sort_columns, :display_columns
 
     extend Forwardable
-
     def_delegators :@repository, :refresh, :save, :destroy, :find_or_create, :columns, :load, :create
 
     def initialize repository, user, *columns
@@ -14,7 +15,7 @@ module Cardigan
 
     def cards
       me = @user
-      cards = @filter ? @repository.cards.select {|card| eval @filter } : @repository.cards
+      cards = @filter ? @repository.select {|card| eval @filter } : @repository.cards
       cards.sort do |a,b|
         a_values = sort_columns.map {|col| a[col] ? a[col] : '' }
         b_values = sort_columns.map {|col| b[col] ? b[col] : '' }
@@ -26,12 +27,8 @@ module Cardigan
       cards.each {|card| yield card }
     end
 
-    def map
-      cards.map {|card| yield card }
-    end
-
     def max_field_length name
-      cards.map {|card| card[name] ? card[name].length : 0 }.max
+      map {|card| card[name] ? card[name].length : 0 }.max
     end
 
     def each_card_from_indices numbers

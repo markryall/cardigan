@@ -5,6 +5,8 @@ require 'cardigan/directory'
 
 module Cardigan
   class Repository
+    include Enumerable
+
     extend Forwardable
     def_delegators :@cards, :each, :find
 
