@@ -12,7 +12,7 @@ module Cardigan
         'now'  => Command.load(:change_status, @entry, @workflow_repository),
         'set'  => Command.load(:change_value, @entry, @io),
         'edit' => Command.load(:edit_value, @entry, @io),
-        'list' => Command.load(:show_entry, @entry, @io)
+        'ls' => Command.load(:show_entry, @entry, @io)
       }
     end
   end
