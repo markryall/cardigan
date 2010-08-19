@@ -1,6 +1,12 @@
+require 'cardigan/commands'
+
 class Cardigan::Command::ClaimCards
+  attr_reader :usage, :help
+
   def initialize repository, io, name
     @repository, @io, @name = repository, io, name
+    @usage = '<number> [<number]*'
+    @help = 'Sets you as the owner of the specified cards'
   end
 
   def execute numbers
@@ -9,13 +15,5 @@ class Cardigan::Command::ClaimCards
       card['owner'] = @name
       @repository.save card
     end
-  end
-  
-  def usage
-    '<number> [<number]*'
-  end
-  
-  def help
-    'Sets you as the owner of the specified cards'
   end
 end

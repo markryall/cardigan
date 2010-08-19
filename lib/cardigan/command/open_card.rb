@@ -1,25 +1,24 @@
 require 'cardigan/entry_context'
 
-module Cardigan
-  module Command
-    class OpenCard
-      def initialize repository, workflow_repository, io
-        @repository, @workflow_repository, @io = repository, workflow_repository, io
-      end
+class Cardigan::Command::OpenCard
+  attr_reader :usage, :help
 
-      def execute name
-        card = @repository.find_or_create(name)
-        EntryContext.new(@io, @workflow_repository, card).push
-        @repository.save card
-      end
+  def initialize repository, workflow_repository, io
+    @repository, @workflow_repository, @io = repository, workflow_repository, io
+    @usage = '<card name>'
+    @help = 'Opens the specified card for editing'
+  end
 
-      def completion text
-        @repository.map {|card| card['name'] }.grep(/^#{Regexp.escape(text)}/).sort
-      end
-      
-      def usage
-        "<card name>"
-      end
-    end
+  def execute name
+    entry = @repository.find { |entry| entry['name'] == name }
+    id = entry ? entry.id : UUIDTools::UUID.random_create.to_s
+    entry ||= {'name' => name}
+    original = entry.dup
+    EntryContext.new(@io, @workflow_repository, entry).push
+    @repository[id] = entry unless original == entry
+  end
+
+  def completion text
+    @repository.map {|card| card['name'] }.grep(/^#{Regexp.escape(text)}/).sort
   end
 end

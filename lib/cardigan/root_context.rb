@@ -29,9 +29,5 @@ module Cardigan
         'import'   => Command.load(:import_cards, @repository, @io)
       }
     end
-
-    def refresh_commands
-      @repository.refresh
-    end
   end
 end

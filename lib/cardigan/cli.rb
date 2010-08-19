@@ -1,5 +1,7 @@
 require 'cardigan/io'
 require 'cardigan/root_context'
+require 'flat_hash/serialiser'
+require 'flat_hash/repository'
 require 'cardigan/repository'
 require 'cardigan/workflow_repository'
 
@@ -22,7 +24,7 @@ module Cardigan
         @home.store CONFIG_FILE, config 
       end
       name = "\"#{config[:name]}\" <#{config[:email]}>"
-      RootContext.new(@io, Repository.new('.cards'), name, WorkflowRepository.new('.')).push
+      RootContext.new(@io, FlatHash::Repository.new(FlatHash::Serialiser.new,'.cards'), name, WorkflowRepository.new('.')).push
     end
   end
 end
