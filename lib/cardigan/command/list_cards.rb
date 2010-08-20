@@ -6,7 +6,7 @@ class Cardigan::Command::ListCards
   end
 
   def execute text
-    cards = @repository.to_a
+    cards = @repository.cards
     if cards.empty?
       @io.say "There are no cards to display"
       return

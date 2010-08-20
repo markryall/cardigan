@@ -13,7 +13,7 @@ class Cardigan::Command::ClaimCards
     @repository.each_card_from_indices(numbers || '') do |card|
       @io.say "claiming \"#{card['name']}\""
       card['owner'] = @name
-      @repository.save card
+      @repository[card.id] = card
     end
   end
 end
