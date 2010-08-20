@@ -1,15 +1,15 @@
 require File.dirname(__FILE__)+'/../spec_helper'
-require 'cardigan/command/add_transitions'
+require 'cardigan/command/remove_transitions'
 
-describe Cardigan::Command::AddTransitions do
+describe Cardigan::Command::RemoveTransitions do
   include IoOutputReader
   extend CommandSpec
   with_usage '<start status> [<subsequent status>]+'
-  with_help 'Creates transitions from a starting status to a number of subsequent statuses'
+  with_help 'Removes transitions from a starting status to a number of subsequent statuses'
 
   before do
     @entry = {}
-    @command = Cardigan::Command::AddTransitions.new(@entry, stub(:io))
+    @command = Cardigan::Command::RemoveTransitions.new(@entry, stub(:io))
   end
 
   [nil, ''].each do |parameter|
@@ -22,15 +22,5 @@ describe Cardigan::Command::AddTransitions do
   it 'should report error when called with a single parameter' do
     @command.execute 'none'
     io_output.should == "missing required subsequent status\n"
-  end
-
-  it 'should append status when called with single' do
-    @command.execute 'none started'
-    @entry['none'].should == ['started']
-  end
-
-  it 'should ignore duplicate subsequent statuses' do
-    @command.execute 'none started started'
-    @entry['none'].should == ['started']
   end
 end

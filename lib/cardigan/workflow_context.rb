@@ -10,7 +10,7 @@ class Cardigan::WorkflowContext
     @commands = {
       'ls'     => Cardigan::Command.load(:show_entry, @entry, @io),
       'add'    => Cardigan::Command.load(:add_transitions, @entry, @io),
-      'rm'     => Cardigan::Command.load(:remove_transitions, @entry),
+      'rm'     => Cardigan::Command.load(:remove_transitions, @entry, @io),
     }
   end
 end

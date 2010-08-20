@@ -6,7 +6,7 @@ class Cardigan::Command::AddTransitions
   def initialize entry, io
     @entry, @io = entry, io
     @usage = '<start status> [<subsequent status>]+'
-    @help = 'creates transitions from a starting status to a number of subsequent statuses'
+    @help = 'Creates transitions from a starting status to a number of subsequent statuses'
   end
 
   def execute text=nil
@@ -20,6 +20,8 @@ class Cardigan::Command::AddTransitions
       return
     end
     @entry[name] ||= []
-    @entry[name] += states.uniq
+    states = states.uniq
+    @entry[name] += states
+    states.each {|state| @entry[state] ||= [] }
   end
 end
