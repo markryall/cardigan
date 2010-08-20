@@ -1,13 +1,16 @@
-module Cardigan
-  module Command
-    class CreateCard
-      def initialize repository
-        @repository = repository
-      end
+require 'cardigan/commands'
+require 'uuidtools'
 
-      def execute name
-        @repository.save @repository.find_or_create(name)
-      end
-    end
+class Cardigan::Command::CreateCard
+  attr_reader :usage, :help
+
+  def initialize repository
+    @repository = repository
+    @usage = '<name>'
+    @help = 'Creates a new card with the specified name (without opening it for editing)'
   end
-end
+
+  def execute name
+    @repository[UUIDTools::UUID.random_create.to_s] = {'name' => name }
+  end
+end 
