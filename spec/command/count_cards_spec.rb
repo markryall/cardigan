@@ -3,6 +3,9 @@ require 'cardigan/command/count_cards'
 
 describe Cardigan::Command::CountCards do
   include IoOutputReader
+  extend CommandSpec
+  with_usage '<grouping field>*'
+  with_help 'Counts cards aggregated across the specified grouping fields'
 
   before do
     @command = Cardigan::Command::CountCards.new(stub(:repository), stub(:io))
@@ -10,6 +13,7 @@ describe Cardigan::Command::CountCards do
 
   [nil, ''].each do |parameter|
     it "should count single row when called with #{parameter}" do
+      so_when(:repository).receives(:cards).return([])
       @command.execute parameter
 
       io_output.should == <<EOF
@@ -23,7 +27,7 @@ EOF
   end
 
   it 'should count single row when no grouping fields are provided' do
-    so_when(:repository).receives(:each).yield('points' => 1)
+    so_when(:repository).receives(:cards).return([{'points' => 1}])
     @command.execute
 
     io_output.should == <<EOF
@@ -36,7 +40,7 @@ EOF
   end
 
   it 'should count single row when a single grouping fields are provided' do
-    so_when(:repository).receives(:each).yield('type' => 'bug')
+    so_when(:repository).receives(:cards).return([{'type' => 'bug'}])
     @command.execute 'type'
 
     io_output.should == <<EOF
@@ -49,7 +53,7 @@ EOF
   end
 
   it 'should count single row when a single grouping fields are provided' do
-    so_when(:repository).receives(:each).yield('type' => 'bug').yield('type' => 'feature')
+    so_when(:repository).receives(:cards).return([{'type' => 'bug'},{'type' => 'feature'}])
     @command.execute 'type'
 
     io_output.should == <<EOF

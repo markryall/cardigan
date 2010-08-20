@@ -1,8 +1,12 @@
 require 'cardigan/text_report_formatter'
 
 class Cardigan::Command::CountCards
+  attr_reader :usage, :help
+
   def initialize repository, io
     @repository, @io = repository, io
+    @usage = "<grouping field>*"
+    @help = "Counts cards aggregated across the specified grouping fields"
   end
 
   def execute text=nil
@@ -11,7 +15,7 @@ class Cardigan::Command::CountCards
     lengths = Array.new(grouping_fields.size, 0)
     counts = {}
     total = 0
-    @repository.each do |card|
+    @repository.cards.each do |card|
       grouping_fields.each_with_index do |grouping_field,index|
         lengths[index] = card[grouping_field].size if card[grouping_field] and card[grouping_field].size > lengths[index]
       end
