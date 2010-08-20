@@ -23,16 +23,12 @@ class Cardigan::Command::ImportCards
         if id_index and row[id_index]
           id = row[id_index]
           card = @repository[id] if @repository.exist?(id)
-          unless card
-            id = "#{row[id_index]}.card"
-            card = @repository[id] if @repository.exist?(id)
-          end
         end
         if card
           puts "updating #{id}"
         else
           id = UUIDTools::UUID.random_create.to_s
-          card = {'id' => id}
+          card = {}
           puts "creating card #{id}"
         end
         editor = Cardigan::CardEditor.new(card, @io)
