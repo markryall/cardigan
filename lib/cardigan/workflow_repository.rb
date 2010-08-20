@@ -8,10 +8,17 @@ class Cardigan::WorkflowRepository
   end
 
   def save workflow
+    workflow.keys.each do |key|
+      workflow[key] = workflow[key].join("\n")
+    end
     @directory[@key] = workflow
   end
 
   def load
-    @directory[@key]
+    workflow = @directory[@key]
+    workflow.keys.each do |key|
+      workflow[key] = workflow[key].split("\n") unless workflow[key].instance_of?(Array)
+    end
+    workflow
   end
 end
