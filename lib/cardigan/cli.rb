@@ -19,7 +19,7 @@ class Cardigan::Cli
     config['email'] = @io.ask('Enter your email address') unless config['email']
     @home[CONFIG_FILE] = config
     repository = FlatHash::Repository.new(FlatHash::Serialiser.new,'.cards')
-    name = "\"#{config['name']}\" <#{config['email]'}>"
+    name = "\"#{config['name']}\" <#{config['email']}>"
     workflow_repository = Cardigan::WorkflowRepository.new('.')
     Cardigan::RootContext.new(@io, repository, name, workflow_repository).push
   end
