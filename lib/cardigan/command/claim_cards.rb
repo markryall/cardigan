@@ -5,8 +5,8 @@ class Cardigan::Command::ClaimCards
 
   def initialize repository, io, name
     @repository, @io, @name = repository, io, name
-    @usage = '<number> [<number]*'
-    @help = 'Sets you as the owner of the specified cards'
+    @usage = '<number>*'
+    @help = 'Sets you as the owner of the specified cards (by index in the list)'
   end
 
   def execute numbers
