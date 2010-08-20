@@ -13,7 +13,7 @@ class Cardigan::Command::OpenCard
   def execute name
     entry = @repository.cards.find { |entry| entry['name'] == name }
     id = entry ? entry.id : UUIDTools::UUID.random_create.to_s
-    entry ||= {'name' => name}
+    entry ||= {'name' => name, 'id' => id}
     original = entry.dup
     Cardigan::EntryContext.new(@io, @workflow_repository, entry).push
     @repository[id] = entry unless original == entry
