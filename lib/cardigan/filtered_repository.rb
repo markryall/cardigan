@@ -8,7 +8,7 @@ module Cardigan
     attr_accessor :filter, :sort_columns, :display_columns
 
     extend Forwardable
-    def_delegators :@repository, :[], :[]=, :exist?
+    def_delegators :@repository, :[], :[]=, :exist?, :destroy
 
     def initialize repository, user, *columns
       @repository, @sort_columns, @display_columns, @user = repository, columns, columns, user
