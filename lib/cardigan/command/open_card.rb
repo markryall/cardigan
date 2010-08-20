@@ -1,4 +1,5 @@
 require 'cardigan/entry_context'
+require 'uuidtools'
 
 class Cardigan::Command::OpenCard
   attr_reader :usage, :help

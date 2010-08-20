@@ -1,8 +1,13 @@
+require 'cardigan/commands'
 require 'cardigan/text_report_formatter'
 
 class Cardigan::Command::ListCards
+  attr_reader :usage, :help
+
   def initialize repository, io
     @repository, @io = repository, io
+    @usage = ''
+    @help = 'Lists all cards that match the current filter'
   end
 
   def execute text
