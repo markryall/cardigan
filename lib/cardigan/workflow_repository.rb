@@ -8,10 +8,10 @@ class Cardigan::WorkflowRepository
   end
 
   def save workflow
-    @directory[@path] = workflow
+    @directory[@key] = workflow
   end
 
   def load
-    @directory[@path]
+    @directory[@key]
   end
 end
