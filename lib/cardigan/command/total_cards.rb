@@ -1,8 +1,13 @@
+require 'cardigan/commands'
 require 'cardigan/text_report_formatter'
 
 class Cardigan::Command::TotalCards
+  attr_reader :usage, :help
+
   def initialize repository, io
     @repository, @io = repository, io
+    @usage = '<numeric field> <grouping field>*'
+    @help = 'Calculates totals for the specified numeric field aggregated across the specified grouping fields'
   end
 
   def execute text=nil    
@@ -12,7 +17,7 @@ class Cardigan::Command::TotalCards
       return
     end
     counts = {}
-    @repository.each do |card|
+    @repository.cards.each do |card|
       key = grouping_fields.map {|grouping_field| card[grouping_field] ? card[grouping_field] : ''}
       value = card[count_field].to_i
       counts[key] = counts[key] ? counts[key] + value : value

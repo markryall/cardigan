@@ -1,3 +1,4 @@
+require 'cardigan/commands'
 require 'cardigan/text_report_formatter'
 
 class Cardigan::Command::CountCards
