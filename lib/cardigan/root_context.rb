@@ -26,7 +26,8 @@ module Cardigan
         'count'    => Command.load(:count_cards, @repository, @io),
         'total'    => Command.load(:total_cards, @repository, @io),
         'export'   => Command.load(:export_cards, @repository),
-        'import'   => Command.load(:import_cards, @repository, @io)
+        'import'   => Command.load(:import_cards, @repository, @io),
+        'commit'   => Command.load(:commit_changes, @repository, @io)
       }
     end
   end
