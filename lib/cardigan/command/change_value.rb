@@ -1,15 +1,16 @@
+require 'cardigan/commands'
 require 'cardigan/card_editor'
 
-module Cardigan
-  module Command
-    class ChangeValue
-      def initialize entry, io
-        @entry, @io = entry, io
-      end
+class Cardigan::Command::ChangeValue
+  attr_reader :usage, :help
 
-      def execute key
-        Cardigan::CardEditor.new(@entry, @io).set key, @io.ask("Enter the new value for #{key}")
-      end
-    end
+  def initialize entry, io
+    @entry, @io = entry, io
+    @usage = '<key>'
+    @help = 'Prompt for a new value to associate with the specified key'
+  end
+
+  def execute key
+    Cardigan::CardEditor.new(@entry, @io).set key, @io.ask("Enter the new value for #{key}")
   end
 end
