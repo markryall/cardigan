@@ -10,17 +10,17 @@ EOF
   spec.email = 'mark@ryall.name'
   spec.homepage = 'http://github.com/markryall/cardigan'
  
-  spec.files = Dir['lib/**/*'] + Dir['bin/*'] + ['README.rdoc', 'MIT-LICENSE', 'gemspec']
+  spec.files = Dir['lib/**/*'] + Dir['bin/*'] + Dir['spec/**/*'] + ['README.rdoc', 'MIT-LICENSE', '.gemtest', 'Rakefile']
   spec.executables << 'cardigan'
 
-  spec.add_dependency 'flat_hash', '~>0.0.2'
-  spec.add_dependency 'splat', '~>0.1.0'
-  spec.add_dependency 'shell_shock', '~>0.0.3'
-  spec.add_dependency 'uuidtools', '~>2.1.1'
-  spec.add_dependency 'activesupport', '~>3.0.3'
+  spec.add_dependency 'flat_hash', '~>0'
+  spec.add_dependency 'splat', '~>0'
+  spec.add_dependency 'shell_shock', '~>0'
+  spec.add_dependency 'uuidtools', '~>2'
+  spec.add_dependency 'activesupport', '~>3'
+  spec.add_dependency 'i18n', '~>0'
 
-  spec.add_development_dependency 'rake', '~>0.8.7'
-  spec.add_development_dependency 'rspec', '~>2.2.0'
-  spec.add_development_dependency 'orangutan', '~>0.0.8'
-  spec.add_development_dependency 'gemesis', '~>0.0.3'
+  spec.add_development_dependency 'rake', '~>0.8'
+  spec.add_development_dependency 'rspec', '~>2'
+  spec.add_development_dependency 'orangutan', '~>0'
 end
