@@ -15,7 +15,7 @@ describe Cardigan::Command::CountCards do
       @repository.stub!(:cards).and_return []
       @command.execute parameter
 
-      @prompt.messages.should.should == [
+      @prompt.messages.should == [
 ' -------',
 '| count |',
 ' -------',
@@ -29,7 +29,7 @@ describe Cardigan::Command::CountCards do
     @repository.stub!(:cards).and_return [{'points' => 1}]
     @command.execute
 
-    @prompt.messages.should.should == [
+    @prompt.messages.should == [
 ' -------',
 '| count |',
 ' -------',
@@ -42,7 +42,7 @@ describe Cardigan::Command::CountCards do
     @repository.stub!(:cards).and_return [{'type' => 'bug'}]
     @command.execute 'type'
 
-    @prompt.messages.should.should == [
+    @prompt.messages.should == [
 ' --------------',
 '| type | count |',
 ' --------------',
@@ -55,7 +55,7 @@ describe Cardigan::Command::CountCards do
     @repository.stub!(:cards).and_return [{'type' => 'bug'},{'type' => 'feature'}]
     @command.execute 'type'
 
-    @prompt.messages.should.should == [
+    @prompt.messages.should == [
 ' -----------------',
 '| type    | count |',
 ' -----------------',
