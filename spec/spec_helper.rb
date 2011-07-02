@@ -1,9 +1,5 @@
 $:.unshift File.dirname(__FILE__)+'/../lib'
 
-Gem::Specification.load(File.dirname(__FILE__)+'/../gemspec').dependencies.each do |dep|
-  gem dep.name, dep.requirement
-end
-
 require 'orangutan/mock_adapter'
 
 require 'stringio'
