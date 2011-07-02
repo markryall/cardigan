@@ -7,18 +7,19 @@ describe Cardigan::Command::RemoveTransitions do
 
   before do
     @entry = {}
-    @command = Cardigan::Command::RemoveTransitions.new(@entry, stub(:io))
+    @io = MockPrompt.new
+    @command = Cardigan::Command::RemoveTransitions.new @entry, @io
   end
 
   [nil, ''].each do |parameter|
     it "should report error when called with #{parameter.inspect}" do
       @command.execute
-      io_output.should == "missing required start status\n"
+      @io.should have_received "missing required start status"
     end
   end
 
   it 'should report error when called with a single parameter' do
     @command.execute 'none'
-    io_output.should == "missing required subsequent status\n"
+    @io.should have_received "missing required subsequent status"
   end
 end
