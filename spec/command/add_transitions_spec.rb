@@ -2,26 +2,25 @@ require File.dirname(__FILE__)+'/../spec_helper'
 require 'cardigan/command/add_transitions'
 
 describe Cardigan::Command::AddTransitions do
-  include IoOutputReader
-  extend CommandSpec
   with_usage '<start status> [<subsequent status>]+'
   with_help 'Creates transitions from a starting status to a number of subsequent statuses'
 
   before do
     @entry = {}
-    @command = Cardigan::Command::AddTransitions.new(@entry, stub(:io))
+    @io = MockPrompt.new
+    @command = Cardigan::Command::AddTransitions.new @entry, @io
   end
 
   [nil, ''].each do |parameter|
     it "should report error when called with #{parameter.inspect}" do
       @command.execute
-      io_output.should == "missing required start status\n"
+      @io.should have_received "missing required start status"
     end
   end
 
   it 'should report error when called with a single parameter' do
     @command.execute 'none'
-    io_output.should == "missing required subsequent status\n"
+    @io.should have_received "missing required subsequent status"
   end
 
   it 'should append status when called with single' do

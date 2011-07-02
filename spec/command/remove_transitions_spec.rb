@@ -2,8 +2,6 @@ require File.dirname(__FILE__)+'/../spec_helper'
 require 'cardigan/command/remove_transitions'
 
 describe Cardigan::Command::RemoveTransitions do
-  include IoOutputReader
-  extend CommandSpec
   with_usage '<start status> [<subsequent status>]+'
   with_help 'Removes transitions from a starting status to a number of subsequent statuses'
 

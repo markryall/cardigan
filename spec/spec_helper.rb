@@ -1,23 +1,21 @@
 $:.unshift File.dirname(__FILE__)+'/../lib'
 
-require 'orangutan/mock_adapter'
+class MockPrompt
+  def initialize
+    @said = []
+  end
 
-require 'stringio'
+  def say message
+    @said << message
+  end
 
-module IoOutputReader
-  def io_output
-    out = StringIO.new
-    calls.each {|call| out.puts call.args.first if call.name == :io and call.method == :say }
-    out.string
+  def has_received? message
+    @said.include? message
   end
 end
 
-module CommandSpec
-  def with_usage text
-    it('should display usage') { @command.usage.should == text }
-  end
+require 'shell_shock/command_spec'
 
-  def with_help text
-    it('should display help') { @command.help.should == text }
-  end
+RSpec.configure do |config|
+  config.extend ShellShock::CommandSpec
 end

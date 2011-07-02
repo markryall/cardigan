@@ -2,8 +2,6 @@ require File.dirname(__FILE__)+'/../spec_helper'
 require 'cardigan/command/count_cards'
 
 describe Cardigan::Command::CountCards do
-  include IoOutputReader
-  extend CommandSpec
   with_usage '<grouping field>*'
   with_help 'Counts cards aggregated across the specified grouping fields'
 

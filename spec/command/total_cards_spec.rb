@@ -2,8 +2,6 @@ require File.dirname(__FILE__)+'/../spec_helper'
 require 'cardigan/command/total_cards'
 
 describe Cardigan::Command::TotalCards do
-  include IoOutputReader
-  extend CommandSpec
   with_usage '<numeric field> <grouping field>*'
   with_help 'Calculates totals for the specified numeric field aggregated across the specified grouping fields'
 

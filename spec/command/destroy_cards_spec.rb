@@ -2,7 +2,6 @@ require File.dirname(__FILE__)+'/../spec_helper'
 require 'cardigan/command/destroy_cards'
 
 describe Cardigan::Command::DestroyCards do
-  extend CommandSpec
   with_usage '<number>*'
   with_help 'Destroys the specified cards (by index in the list)'
 

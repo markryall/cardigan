@@ -2,8 +2,6 @@ require File.dirname(__FILE__)+'/spec_helper'
 require 'cardigan/text_report_formatter'
 
 describe Cardigan::TextReportFormatter do
-  include IoOutputReader
-
   before do
     @formatter = Cardigan::TextReportFormatter.new(stub(:io))
   end
