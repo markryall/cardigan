@@ -6,62 +6,63 @@ describe Cardigan::Command::CountCards do
   with_help 'Counts cards aggregated across the specified grouping fields'
 
   before do
-    @command = Cardigan::Command::CountCards.new(stub(:repository), stub(:io))
+    @repository, @prompt = stub(:repository), MockPrompt.new
+    @command = Cardigan::Command::CountCards.new @repository, @prompt
   end
 
   [nil, ''].each do |parameter|
     it "should count single row when called with #{parameter}" do
-      so_when(:repository).receives(:cards).return([])
+      @repository.stub!(:cards).and_return []
       @command.execute parameter
 
-      io_output.should == <<EOF
- -------
-| count |
- -------
-| 0     |
- -------
-EOF
+      @prompt.messages.should.should == [
+' -------',
+'| count |',
+' -------',
+'| 0     |',
+' -------'
+]
     end
   end
 
   it 'should count single row when no grouping fields are provided' do
-    so_when(:repository).receives(:cards).return([{'points' => 1}])
+    @repository.stub!(:cards).and_return [{'points' => 1}]
     @command.execute
 
-    io_output.should == <<EOF
- -------
-| count |
- -------
-| 1     |
- -------
-EOF
+    @prompt.messages.should.should == [
+' -------',
+'| count |',
+' -------',
+'| 1     |',
+' -------'
+]
   end
 
   it 'should count single row when a single grouping fields are provided' do
-    so_when(:repository).receives(:cards).return([{'type' => 'bug'}])
+    @repository.stub!(:cards).and_return [{'type' => 'bug'}]
     @command.execute 'type'
 
-    io_output.should == <<EOF
- --------------
-| type | count |
- --------------
-| bug  | 1     |
- --------------
-EOF
+    @prompt.messages.should.should == [
+' --------------',
+'| type | count |',
+' --------------',
+'| bug  | 1     |',
+' --------------'
+]
   end
 
   it 'should count single row when a single grouping fields are provided' do
-    so_when(:repository).receives(:cards).return([{'type' => 'bug'},{'type' => 'feature'}])
+    @repository.stub!(:cards).and_return [{'type' => 'bug'},{'type' => 'feature'}]
     @command.execute 'type'
 
-    io_output.should == <<EOF
- -----------------
-| type    | count |
- -----------------
-| bug     | 1     |
-| feature | 1     |
-|         | 2     |
- -----------------
-EOF
+    @prompt.messages.should.should == [
+' -----------------',
+'| type    | count |',
+' -----------------',
+'| bug     | 1     |',
+'| feature | 1     |',
+'|         | 2     |',
+' -----------------'
+]
   end
 end
