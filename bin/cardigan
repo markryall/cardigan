@@ -2,10 +2,6 @@
 
 require 'rubygems'
 
-Gem::Specification.load(File.dirname(__FILE__)+'/../gemspec').dependencies.each do |dep|
-  gem dep.name, dep.requirement if dep.type == :runtime
-end
-
 $:.unshift File.dirname(__FILE__)+'/../lib'
 
 require 'cardigan/cli'
