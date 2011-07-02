@@ -12,6 +12,10 @@ class MockPrompt
   def has_received? message
     @said.include? message
   end
+
+  def messages
+    @said
+  end
 end
 
 require 'shell_shock/command_spec'
