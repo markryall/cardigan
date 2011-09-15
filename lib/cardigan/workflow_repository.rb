@@ -1,9 +1,11 @@
 require 'flat_hash/serialiser'
 require 'flat_hash/repository'
 
+module Cardigan; end
+
 class Cardigan::WorkflowRepository
   def initialize path
-    @directory = FlatHash::Directory.new(FlatHash::Serialiser.new,'.')
+    @directory = FlatHash::Directory.new FlatHash::Serialiser.new, path
     @key = '.card_workflow'
   end
 
@@ -15,7 +17,7 @@ class Cardigan::WorkflowRepository
   end
 
   def load
-    workflow = @directory[@key]
+    workflow = @directory.exist?(@key) ? @directory[@key] : {}
     workflow.keys.each do |key|
       workflow[key] = workflow[key].split("\n") unless workflow[key].instance_of?(Array)
     end
