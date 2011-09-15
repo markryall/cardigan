@@ -1,0 +1,3 @@
+== 0.1.1 (unreleased)
+
+* fixed bug - cardigan would crash when entering workflow shell if no workflow existed yet
