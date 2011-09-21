@@ -20,7 +20,12 @@ class Cardigan::Cli
     @home[CONFIG_FILE] = config
     repository = FlatHash::Repository.new(FlatHash::Serialiser.new,'.cards')
     name = "\"#{config['name']}\" <#{config['email']}>"
-    workflow_repository = Cardigan::WorkflowRepository.new('.')
-    Cardigan::RootContext.new(@io, repository, name, workflow_repository).push
+    workflow_repository = Cardigan::WorkflowRepository.new '.'
+    root = Cardigan::RootContext.new @io, repository, name, workflow_repository
+    if args.size == 0
+      root.push
+    else
+      root.execute args
+    end
   end
 end

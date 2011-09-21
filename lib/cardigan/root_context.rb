@@ -30,5 +30,10 @@ module Cardigan
         'commit'   => Command.load(:commit_changes, @repository, @io)
       }
     end
+
+    def execute args
+      command = args.shift
+      @commands[command].execute args
+    end
   end
 end
