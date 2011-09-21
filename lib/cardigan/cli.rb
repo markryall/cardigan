@@ -4,22 +4,21 @@ require 'flat_hash/directory'
 require 'flat_hash/serialiser'
 require 'flat_hash/repository'
 require 'cardigan/workflow_repository'
+require 'cardigan/configuration'
 
 class Cardigan::Cli
-  CONFIG_FILE = '.cardigan'
-
   def initialize io=Cardigan::Io.new
     @io = io
-    @home = FlatHash::Directory.new(FlatHash::Serialiser.new,File.expand_path('~'))
+    home_path = File.expand_path '~'
+    home = FlatHash::Directory.new FlatHash::Serialiser.new, home_path
+    @configuration = Cardigan::Configuration.new home, '.cardigan'
   end
 
   def execute *args
-    config = @home.exist?(CONFIG_FILE) ? @home[CONFIG_FILE] : {}
-    config['name'] = @io.ask('Enter your full name') unless config['name']
-    config['email'] = @io.ask('Enter your email address') unless config['email']
-    @home[CONFIG_FILE] = config
-    repository = FlatHash::Repository.new(FlatHash::Serialiser.new,'.cards')
-    name = "\"#{config['name']}\" <#{config['email']}>"
+    @configuration['name'] = @io.ask('Enter your full name') unless @configuration['name']
+    @configuration['email'] = @io.ask('Enter your email address') unless @configuration['email']
+    repository = FlatHash::Repository.new FlatHash::Serialiser.new, '.cards'
+    name = "\"#{@configuration['name']}\" <#{@configuration['email']}>"
     workflow_repository = Cardigan::WorkflowRepository.new '.'
     root = Cardigan::RootContext.new @io, repository, name, workflow_repository
     if args.size == 0
