@@ -32,7 +32,7 @@ module Cardigan
 
     def execute args
       command = args.shift
-      @commands[command].execute args
+      @commands[command].execute args.join(' ')
     end
   end
 end
