@@ -5,13 +5,36 @@ module Cardigan
   class FilteredRepository
     include Enumerable
 
-    attr_accessor :filter, :sort_columns, :display_columns
+    attr_reader :filter, :sort_columns, :display_columns
 
     extend Forwardable
     def_delegators :@repository, :[], :[]=, :exist?, :destroy, :addremovecommit
 
-    def initialize repository, user, *columns
-      @repository, @sort_columns, @display_columns, @user = repository, columns, columns, user
+    def initialize repository, user, configuration
+      @repository, @user, @configuration = repository, user, configuration
+      @sort_columns = multi('sort') || ['name']
+      @display_columns = multi('display') || ['name']
+      @filter = @configuration['filter']
+    end
+
+    def multi key
+      return nil unless @configuration[key]
+      @configuration[key].split "\n"
+    end
+
+    def filter= filter
+      @filter = filter
+      @configuration['filter'] = filter
+    end
+
+    def sort_columns= columns
+      @sort_columns = columns
+      @configuration['sort'] = columns.join "\n"
+    end
+
+    def display_columns= columns
+      @display_columns = columns
+      @configuration['display'] = columns.join "\n"
     end
 
     def cards

@@ -4,8 +4,8 @@ require 'flat_hash/repository'
 module Cardigan; end
 
 class Cardigan::WorkflowRepository
-  def initialize path
-    @directory = FlatHash::Directory.new FlatHash::Serialiser.new, path
+  def initialize directory
+    @directory = directory
     @key = '.card_workflow'
   end
 

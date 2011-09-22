@@ -1,15 +1,14 @@
 require 'rubygems'
 require 'shell_shock/context'
 require 'cardigan/commands'
-require 'cardigan/filtered_repository'
 
 module Cardigan
   class RootContext
     include ShellShock::Context
 
     def initialize io, repository, name, workflow_repository
-      @io, @repository, @name, @workflow_repository = io, FilteredRepository.new(repository, name, 'name'), name, workflow_repository
-      @prompt_text = "#{File.expand_path('.').split('/').last} > "
+      @io, @repository, @name, @workflow_repository = io, repository, name, workflow_repository
+      @prompt = "#{File.expand_path('.').split('/').last} > "
       @commands = {
         'claim'    => Command.load(:claim_cards, @repository, @io, @name),
         'touch'    => Command.load(:create_card, @repository),
