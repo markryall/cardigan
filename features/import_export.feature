@@ -25,3 +25,14 @@ Feature: cardigan import and export
     | 3     | zxcv |
      --------------
     """
+
+  Scenario: export cards to csv
+    When I run `cardigan touch qwer`
+    And I run `cardigan touch asdf`
+    And I run `cardigan touch zxcv`
+    And I run `cardigan export cards`
+    Then the exit status should be 0
+    And the file "cards.csv" should match /^id,name$/
+    And the file "cards.csv" should match /^\w{8}-\w{4}-\w{4}-\w{4}-\w{12},qwer$/
+    And the file "cards.csv" should match /^\w{8}-\w{4}-\w{4}-\w{4}-\w{12},asdf$/
+    And the file "cards.csv" should match /^\w{8}-\w{4}-\w{4}-\w{4}-\w{12},zxcv$/
