@@ -12,6 +12,7 @@ module Cardigan
 
     def []= key, value
       @config[key] = value
+      @config.delete key unless value
       @directory[@name] = @config
     end
   end
