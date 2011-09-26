@@ -24,4 +24,5 @@ EOF
 
   spec.add_development_dependency 'rake', '~>0.8'
   spec.add_development_dependency 'rspec', '~>2'
+  spec.add_development_dependency 'aruba', '~>0'
 end

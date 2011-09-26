@@ -26,24 +26,71 @@ So what now?
 
 You start in listing mode.
 
-The commands available are (with the awesome power of tab completion):
+To get the list of available commands:
 
-* quit or exit or ctrl-d - exit
-* list - shows all cards with an index
-* filter <filter> - sets the filter for cards - this is ruby code such as card[:name].start_with?('a')
-* claim <numbers> - sets the owner of the specified cards (by index from the list)
-* unclaim <numbers> - removes the owner from the specified cards (by index from the list)
-* create <name> - creates a card with the specified name
-* open <name> - creates or opens the card and enters edit mode
-* display <columns> - lists or changes the columns to be displayed by the list command
-* sort <columns> - lists or changes the columns to be used for sorting by the list command
-* destroy <numbers> - deletes the specified cards (by index from the list)
-* set <key> <numbers> - prompts for a field value and sets it on all specified cards (by index from the list)
-* workflow - enters workflow editing mode
-* count <grouping fields> - counts the number of cards for each combination of the grouping fields
-* total <numeric field> <grouping fields> - calculates the total of the specified numeric field for each combination of the grouping fields
-* export <filename> - writes all columns for current filtered cards to <filename>.csv
-* import <filename> - imports all cards from <filename>.csv - cards will be updated with a matching id, otherwise new cards will be created.
+    ?
+
+To get help for a specific command:
+
+    ? filter
+
+Here are a few of the commands:
+
+    touch write some documentation
+
+... will create a new card called 'write some documentation'
+
+    cd write some documentation
+
+... enters edit mode for the 'write some documentation' card (note that tab completion is provided for the card name)
+
+    ls
+
+... will present a list of the current set of cards
+
+    columns name estimate
+    
+... will change the display columns to 'name' and 'estimate'
+
+    filter card['owner'] == me
+
+... will filter the list of cards to show only the ones owned by you
+
+    claim 2 4 5
+
+... assigns cards 2, 4 and 5 to you (by setting the 'owner'). Note that these numbers are the indexes presented by the 'ls' command
+
+    unclaim 4 5
+  
+... unsets the owner of cards 4 and 5
+
+    destroy 4
+
+... destroys card 4
+
+    set priority 4 6 7
+
+... prompts for a new value for the priority field on cards 4, 6 and 7
+
+    workflow
+
+... enters the workflow editing mode
+
+    count priority complexity
+
+... counts the number of cards with each value of the available combinations of priority and complexity
+
+    count estimate priority
+
+... presents the total of estimate for cards group in each value of priority
+
+    export foo
+
+... exports all cards (according to the current filter) to a csv file called foo.csv    
+
+    import foo
+
+... imports the contents of foo.csv - cards will be updated with a matching id, otherwise new cards will be created.
 
 == Editing mode
 
@@ -63,10 +110,6 @@ The only purpose is to populate tab completion for the 'now' command in edit mod
 * create <status> - creates a new status
 * add <status> <statuses> - add the specified statuses as valid transitions from status
 * remove <status> <statuses> - remove the specified statuses as valid transitions from status
-
-== Walkthroughs
-
-In case this documentation makes no sense at all, a few usage scenarios can be found here: http://gist.github.com/331647
 
 == Future plans
 
