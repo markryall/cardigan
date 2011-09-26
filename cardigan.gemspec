@@ -13,6 +13,8 @@ EOF
   spec.files = Dir['lib/**/*'] + Dir['bin/*'] + Dir['spec/**/*'] + ['README.rdoc', 'MIT-LICENSE', '.gemtest', 'Rakefile']
   spec.executables << 'cardigan'
 
+  spec.required_ruby_version = '>= 1.9'
+
   spec.add_dependency 'flat_hash', '~>0'
   spec.add_dependency 'splat', '~>0'
   spec.add_dependency 'shell_shock', '~>0'
