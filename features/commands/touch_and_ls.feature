@@ -1,4 +1,4 @@
-Feature: cardigan command line usage
+Feature: touch and ls
 
   In order to manage my ideas
   As a command line junkie
