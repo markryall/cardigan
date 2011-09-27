@@ -1,4 +1,4 @@
-== 0.1.1 (unreleased)
+# 0.1.1 (unreleased)
 
 * fixed bug - cardigan would crash when entering workflow shell if no workflow existed yet
 * fixed bug - csv import didn't use correct 1.9 csv api

@@ -1,18 +1,18 @@
-= Cardigan
+# Cardigan
 
 A simple command line project task tracking tool.
 
-== Rationale
+## Rationale
 
 * command line tools are faster and cooler than any gui or web interface
 * it makes sense to store work items in your source repository 
 * tab completion is awesome
 
-== Installation
+## Installation
 
   gem install cardigan
 
-== Usage
+## Usage
 
   cardigan
 
@@ -22,7 +22,7 @@ This will prompt for your name and email address (and store them in ~/.cardigan)
 
 So what now?
 
-== Listing mode
+## Listing mode
 
 You start in listing mode.
 
@@ -92,14 +92,14 @@ Here are a few of the commands:
 
 ... imports the contents of foo.csv - cards will be updated with a matching id, otherwise new cards will be created.
 
-== Editing mode
+## Editing mode
 
 * quit or exit or ctrl-d - exit
 * list - dumps the values of all card field values
 * set <key> - creates a new field and prompts for the new value
 * now <status> - changes the status of the card to the given status (the tab completion will be populated with the valid subsequent statuses from the current status)
 
-== Workflow mode
+## Workflow mode
 
 Workflow is pretty simple - it is just for convenience in specifiying the set of valid transitions for cards with a specific status.
 
@@ -111,7 +111,7 @@ The only purpose is to populate tab completion for the 'now' command in edit mod
 * add <status> <statuses> - add the specified statuses as valid transitions from status
 * remove <status> <statuses> - remove the specified statuses as valid transitions from status
 
-== Other tools
+## Other tools
 
 All cardigan commands can be executed directly without entering a shell:
 
@@ -121,6 +121,6 @@ All cardigan commands can be executed directly without entering a shell:
 
 zsh command line completion for this can be configured by creating a symlink to the gem tools/zsh/_cardigan from one of the directories in $fpath.
 
-== Future plans
+## Future plans
 
 Refer to the .cards for detailed story breakdown but automatic vcs interaction and generating pretty html reports/charts seem to be the most important missing features.
