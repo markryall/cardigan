@@ -29,6 +29,7 @@ EOF
   spec.add_dependency 'i18n', '~>0'
 
   spec.add_development_dependency 'rake', '~>0.8'
+  spec.add_development_dependency 'relish', '~>0.5'
   spec.add_development_dependency 'rspec', '~>2'
   spec.add_development_dependency 'aruba', '~>0'
 end
