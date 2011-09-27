@@ -10,9 +10,8 @@ Feature: cd
   Within the cardigan shell, note that 'cd' enters a nested shell (so you need to exit or
   ctrl-d twice).
 
-  Scenario: export cards to csv
-    When I run `cardigan touch a very interesting card`
-    And I run `cardigan cd a very interesting card` interactively
+  Scenario: open a card for editing
+    When I run `cardigan cd a very interesting card` interactively
     And I type "set estimate"
     And I type "10"
     And I type "ls"
