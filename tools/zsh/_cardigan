@@ -3,7 +3,6 @@
 
 local -a _1st_arguments
 _1st_arguments=(
-  '?:display commands or help for specific command'
   'cd:enter shell to edit specific card'
   'claim:claim the specified cards by index'
   'columns:specify the columns to display in list view'
@@ -11,7 +10,6 @@ _1st_arguments=(
   'count:display card counts grouped by specified attributes'
   'export:export cards to a csv file'  
   'filter:apply filter (a ruby block) to current cards'  
-  'help:display commands or help for specific command'
   'import:import cards from a csv file'
   'ls:list all cards (subject to current filter)'
   'rm:remove the specified cards by index'
