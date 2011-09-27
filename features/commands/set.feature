@@ -1,4 +1,4 @@
-Feature: cd
+Feature: set
 
   In order to manage my ideas
   As a command line junkie

@@ -1,4 +1,4 @@
-Feature: filter
+Feature: unfilter
 
   In order to see relevant information
   As a command line junkie
