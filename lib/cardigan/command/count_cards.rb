@@ -22,7 +22,7 @@ class Cardigan::Command::CountCards
       end
       key = grouping_fields.map {|key| card[key] ? card[key] : ''}
       counts[key] = counts[key] ? counts[key] + 1 : 1
-      total += counts[key]
+      total += 1
     end
 
     values = counts.keys.sort.map do |key|
