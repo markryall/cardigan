@@ -21,7 +21,6 @@ class Cardigan::Command::ImportCards
     CSV.open(filename, 'r') do |csv|
       csv.to_a.each do |row|
         if header
-          p row
           if id_index and row[id_index]
             id = row[id_index]
             card = @repository[id] if @repository.exist?(id)
@@ -29,9 +28,9 @@ class Cardigan::Command::ImportCards
           if card
             puts "updating #{id}"
           else
-            id = UUIDTools::UUID.random_create.to_s
+            id ||= UUIDTools::UUID.random_create.to_s
             card = {}
-            puts "creating card #{id}"
+            puts "creating new card with id #{id}"
           end
           editor = Cardigan::CardEditor.new(card, @io)
           header.each_with_index do |field, index|
@@ -41,7 +40,6 @@ class Cardigan::Command::ImportCards
         else
           header = row
           id_index = header.find_index('id')
-          puts "header is #{header.to_s}, id index is #{id_index}"
         end
       end
     end

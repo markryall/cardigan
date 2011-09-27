@@ -4,16 +4,17 @@ Feature: import and export
   As a command line junkie
   I want to roundtrip import and export my cards
 
-  Scenario: import cards from csv
-    Given a file named "cards.csv" with:
+  Scenario: import cards containing ids from csv
+    Given a file named "cards1.csv" with:
     """
     id,name,estimate
-    10,qwer,2
+    10,qwer,1
     11,adsf,2
-    12,zxcv,2
+    12,zxcv,3
     """
-    When I run `cardigan import cards`
+    When I run `cardigan import cards1`
     And I run `cardigan ls`
+    And I run `cardigan export cards2`
     Then the exit status should be 0
     And the stdout should contain:
     """
@@ -25,6 +26,10 @@ Feature: import and export
     | 3     | zxcv |
      --------------
     """
+    And the file "cards2.csv" should contain "id,estimate,name"
+    And the file "cards2.csv" should contain "10,1,qwer"
+    And the file "cards2.csv" should contain "11,2,adsf"
+    And the file "cards2.csv" should contain "12,3,zxcv"
 
   Scenario: export cards to csv
     When I run `cardigan touch qwer`
