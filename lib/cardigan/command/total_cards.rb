@@ -17,10 +17,12 @@ class Cardigan::Command::TotalCards
       return
     end
     counts = {}
+    total = 0
     @repository.cards.each do |card|
       key = grouping_fields.map {|grouping_field| card[grouping_field] ? card[grouping_field] : ''}
       value = card[count_field].to_i
       counts[key] = counts[key] ? counts[key] + value : value
+      total += value
     end
 
     values = counts.keys.sort.map do |key|
@@ -28,6 +30,8 @@ class Cardigan::Command::TotalCards
       grouping_fields.each_with_index {|grouping_field,index| hash[grouping_field] = key[index] }
       hash
     end
+
+    values << {count_field => total} unless counts.size == 1
 
     formatter = Cardigan::TextReportFormatter.new @io
     grouping_fields.each {|grouping_field| formatter.add_column(grouping_field, 0)}
