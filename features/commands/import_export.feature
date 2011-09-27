@@ -1,4 +1,4 @@
-Feature: cardigan import and export
+Feature: import and export
 
   In order to interoperate with other tracking systems
   As a command line junkie
