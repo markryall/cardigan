@@ -111,6 +111,16 @@ The only purpose is to populate tab completion for the 'now' command in edit mod
 * add <status> <statuses> - add the specified statuses as valid transitions from status
 * remove <status> <statuses> - remove the specified statuses as valid transitions from status
 
+== Other tools
+
+All cardigan commands can be executed directly without entering a shell:
+
+    cardigan touch create the first card
+    cardigan touch create the second card
+    cardigan ls
+
+zsh command line completion for this can be configured by creating a symlink to the gem tools/zsh/_cardigan from one of the directories in $fpath.
+
 == Future plans
 
 Refer to the .cards for detailed story breakdown but automatic vcs interaction and generating pretty html reports/charts seem to be the most important missing features.

@@ -10,7 +10,13 @@ EOF
   spec.email = 'mark@ryall.name'
   spec.homepage = 'http://github.com/markryall/cardigan'
  
-  spec.files = Dir['lib/**/*'] + Dir['bin/*'] + Dir['spec/**/*'] + ['README.rdoc', 'MIT-LICENSE', '.gemtest', 'Rakefile']
+  spec.files = Dir['bin/**/*'] +
+    Dir['features/**/*'] +
+    Dir['lib/**/*'] +
+    Dir['spec/**/*'] +
+    Dir['tools/**/*'] +
+    %w{HISTORY.rdoc README.rdoc MIT-LICENSE .gemtest Rakefile}
+
   spec.executables << 'cardigan'
 
   spec.required_ruby_version = '>= 1.9'
