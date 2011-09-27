@@ -1,0 +1,37 @@
+#compdef cardigan
+#autoload
+
+local -a _1st_arguments
+_1st_arguments=(
+  '?:display commands or help for specific command'
+  'cd:enter shell to edit specific card'
+  'claim:claim the specified cards by index'
+  'columns:specify the columns to display in list view'
+  'commit:commit all current changes'
+  'count:display card counts grouped by specified attributes'
+  'export:export cards to a csv file'  
+  'filter:apply filter (a ruby block) to current cards'  
+  'help:display commands or help for specific command'
+  'import:import cards from a csv file'
+  'ls:list all cards (subject to current filter)'
+  'rm:remove the specified cards by index'
+  'set:prompt for a new value for the specified attribute for specified cards by index'
+  'sort:specify sort columns for list view'
+  'total:display total for numeric attribute grouped by specified attributes'
+  'touch:create a new card with the specified description'
+  'unclaim:remove owner from the specified cards'
+  'unfilter:remove current filter'
+  'workflow:enter shell to edit workflow'
+)
+
+local expl
+
+_arguments \
+  '(-v --version)'{-v,--version}'[show version]' \
+  '(-h --help)'{-h,--help}'[show help]' \
+  '*:: :->subcmds' && return 0
+
+if (( CURRENT == 1 )); then
+  _describe -t commands "cardigan subcommand" _1st_arguments
+  return
+fi
