@@ -1,8 +1,11 @@
 require 'bundler/gem_tasks'
 
+task :default => :test
+
 desc 'execute specifications'
 task :test do
   sh 'rspec spec'
+  sh 'cucumber'
 end
 
 SHARED_DOCS=%w{README HISTORY}
@@ -10,7 +13,7 @@ SHARED_DOCS=%w{README HISTORY}
 desc "Push feature documentation to relishapp using the relish-client-gem"
 task :relish, :version do |t, args|
   raise "rake relish[VERSION]" unless args[:version]
-  SHARED_DOCS.each {|doc| sh "cp #{doc}.rdoc features/" }
+  SHARED_DOCS.each {|doc| sh "cp #{doc}.md features/" }
   sh "relish push cardigan/cardigan:#{args[:version]}"
-  SHARED_DOCS.each {|doc| sh "rm features/#{doc}.rdoc" }
+  SHARED_DOCS.each {|doc| sh "rm features/#{doc}.md" }
 end
