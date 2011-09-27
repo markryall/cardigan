@@ -15,7 +15,7 @@ EOF
     Dir['lib/**/*'] +
     Dir['spec/**/*'] +
     Dir['tools/**/*'] +
-    %w{HISTORY.rdoc README.rdoc MIT-LICENSE .gemtest Rakefile}
+    %w{HISTORY.md README.md MIT-LICENSE .gemtest Rakefile}
 
   spec.executables << 'cardigan'
 
