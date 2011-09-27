@@ -6,8 +6,9 @@ Feature: count
 
   Scenario: count total cards
     When I run `cardigan` interactively
-    And I type "touch card 1"
-    And I type "touch card 2"
+    And I create the following cards:
+     | card 1 |
+     | card 2 |
     And I type "count"
     And I type "exit"
     Then the exit status should be 0
@@ -22,9 +23,10 @@ Feature: count
 
   Scenario: count total cards grouped by an attribute
     When I run `cardigan` interactively
-    And I type "touch card 1"
-    And I type "touch card 2"
-    And I type "touch card 3"
+    And I create the following cards:
+     | card 1 |
+     | card 2 |
+     | card 3 |
     And I type "set release 1 3"
     And I type "ocelot"
     And I type "set release 2"
