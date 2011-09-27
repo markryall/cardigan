@@ -10,17 +10,21 @@ A simple command line project task tracking tool.
 
 ## Installation
 
-  gem install cardigan
+    gem install cardigan
 
 ## Usage
 
-  cardigan
+    cardigan
 
 This will prompt for your name and email address (and store them in ~/.cardigan), create a folder called .cards in the current directory and enter a shell.  The idea is that you will run this at the root of a git/hg/svn/whatever repository and manage the cards in the same way you manage your source code.
 
-  cardigan >
+    cardigan >
 
 So what now?
+
+## Documentation
+
+Comprehensive documentation can be found on [relish](https://www.relishapp.com/cardigan) but for a brief intro, read on.
 
 ## Listing mode
 
@@ -94,22 +98,48 @@ Here are a few of the commands:
 
 ## Editing mode
 
-* quit or exit or ctrl-d - exit
-* list - dumps the values of all card field values
-* set <key> - creates a new field and prompts for the new value
-* now <status> - changes the status of the card to the given status (the tab completion will be populated with the valid subsequent statuses from the current status)
+Once you're in edit mode (by executing the 'cd' command in listing mode), you can edit the individual fields of a card.
+
+    ls
+
+... will list the current values for all fields
+
+    set priority
+
+... prompts for a new value for the priority field
+
+    edit description
+
+... launches your default editor (determined by the EDITOR environment variable) to allow you
+to edit a multi line value for 'description'
+
+    now closed
+
+... will set the 'status' field to 'closed'
+
+Tab completion for 'now' is determined by what the current value for 'status' and what has
+been set up in workflow mode (see below).
+
+Note that you have entered a nested shell so need to `exit` or ctrl-d to get back to listing
+mode.
 
 ## Workflow mode
 
-Workflow is pretty simple - it is just for convenience in specifiying the set of valid transitions for cards with a specific status.
+Workflow is pretty simple - it is just for convenience in tab completion for the 'now' command in edit mode for a card.
 
-The only purpose is to populate tab completion for the 'now' command in edit mode for a card.
+   ls
 
-* quit or exit or ctrl-d - exit
-* list - dumps the current workflow (statuses with their valid subsequent statuses)
-* create <status> - creates a new status
-* add <status> <statuses> - add the specified statuses as valid transitions from status
-* remove <status> <statuses> - remove the specified statuses as valid transitions from status
+... dumps the current workflow (statuses with their valid subsequent statuses)
+
+    add started completed blocked
+
+... adds 'completed' and 'blocked' as valid transitions from 'started'
+
+    rm started blocked
+
+.... remove 'blocked' as a valid transitions from 'started'
+
+Again, this is a nested shell, so you need to `exit` or ctrl-d to get back to listing mode.
 
 ## Other tools
 
