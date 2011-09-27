@@ -4,7 +4,11 @@ Feature: cd
   As a command line junkie
   I want to be able to edit individual attributes of a card
 
-  The cd command is named because you are 'changing directory' to edit a card.
+  The cd command is so named because within the shell, you are 'changing directory' to
+  edit a card.
+
+  Within the cardigan shell, note that 'cd' enters a nested shell (so you need to exit or
+  ctrl-d twice).
 
   Scenario: export cards to csv
     When I run `cardigan touch a very interesting card`
