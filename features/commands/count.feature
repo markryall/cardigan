@@ -1,4 +1,4 @@
-Feature: filter
+Feature: count
 
   In order to see relevant information
   As a command line junkie
