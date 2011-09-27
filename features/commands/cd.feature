@@ -1,4 +1,4 @@
-Feature: cd command to edit a card
+Feature: cd
 
   In order to manage my ideas
   As a command line junkie
