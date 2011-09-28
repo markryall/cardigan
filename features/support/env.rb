@@ -10,9 +10,8 @@ CARDIGAN_NAME = 'Ms Crazy Person'
 CARDIGAN_EMAIL = 'you@there.com'
 
 Before do
-  if File.exist? CARDIGAN_CONFIG
-    FileUtils.mv CARDIGAN_CONFIG, CARDIGAN_CONFIG_BKP 
-    File.open CARDIGAN_CONFIG, 'w' do |file|
+  FileUtils.mv CARDIGAN_CONFIG, CARDIGAN_CONFIG_BKP if File.exist? CARDIGAN_CONFIG
+  File.open CARDIGAN_CONFIG, 'w' do |file|
       file.puts <<EOF
 email
 #{CARDIGAN_EMAIL}
@@ -20,13 +19,10 @@ email
 name
 #{CARDIGAN_NAME}
 EOF
-    end
   end
 end
 
 After do
-  if File.exist? CARDIGAN_CONFIG_BKP
-    FileUtils.rm CARDIGAN_CONFIG
-    FileUtils.mv CARDIGAN_CONFIG_BKP, CARDIGAN_CONFIG
-  end
+  FileUtils.rm CARDIGAN_CONFIG
+  FileUtils.mv CARDIGAN_CONFIG_BKP, CARDIGAN_CONFIG if File.exist? CARDIGAN_CONFIG_BKP
 end

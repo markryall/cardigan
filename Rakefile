@@ -1,6 +1,6 @@
 require 'bundler/gem_tasks'
 
-task :default => :test
+task :default => [:test, :features]
 
 desc 'execute specifications'
 task :test do
