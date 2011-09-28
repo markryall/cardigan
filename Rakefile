@@ -5,8 +5,14 @@ task :default => :test
 desc 'execute specifications'
 task :test do
   sh 'rspec spec'
+end
+
+desc 'execute features'
+task :features do
   sh 'cucumber'
 end
+
+task :all => [:test, :features]
 
 SHARED_DOCS=%w{README HISTORY}
 
