@@ -1,5 +1,4 @@
-[![Build
-Status](http://travis-ci.org/markryall/cardigan.png)](http://travis-ci.org/markryall/cardigan.png)
+[![Build Status](https://secure.travis-ci.org/markryall/cardigan.png)](http://travis-ci.org/markryall/cardigan)
 
 # Cardigan
 
