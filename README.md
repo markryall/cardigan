@@ -1,3 +1,6 @@
+[![Build
+Status](http://travis-ci.org/markryall/cardigan.png)](http://travis-ci.org/markryall/cardigan.png)
+
 # Cardigan
 
 A simple command line project task tracking tool.
