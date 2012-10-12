@@ -1,2 +1,0 @@
-export PATH=./bin:$PATH
-rvm use 1.9.2@cardigan --create
