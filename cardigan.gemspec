@@ -9,7 +9,7 @@ EOF
   spec.authors << 'Mark Ryall'
   spec.email = 'mark@ryall.name'
   spec.homepage = 'http://github.com/markryall/cardigan'
- 
+
   spec.files = Dir['bin/**/*'] +
     Dir['features/**/*'] +
     Dir['lib/**/*'] +
@@ -25,7 +25,6 @@ EOF
   spec.add_dependency 'splat', '~>0'
   spec.add_dependency 'shell_shock', '~>0'
   spec.add_dependency 'uuidtools', '~>2'
-  spec.add_dependency 'activesupport', '~>3'
   spec.add_dependency 'i18n', '~>0'
 
   spec.add_development_dependency 'rake', '~>0.8'

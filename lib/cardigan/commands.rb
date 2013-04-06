@@ -1,10 +1,12 @@
-require 'active_support/inflector'
-
 module Cardigan
   module Command
     def self.load name, *args
       require "cardigan/command/#{name}"
-      Command.const_get(name.to_s.camelize).new(*args)
+      Command.const_get(classify name).new(*args)
+    end
+
+    def self.classify s
+      s.to_s.split('_').map(&:capitalize).join
     end
   end
 end
